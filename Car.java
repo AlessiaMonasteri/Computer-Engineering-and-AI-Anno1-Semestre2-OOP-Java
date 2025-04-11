@@ -3,6 +3,14 @@ public class Car {
     String model;
     int year;
 
+    String displayInformation(){
+        return "Car: " + this.brand + " " + this.model + " " + this.year;
+    }
+
+    void startEngine(){
+        System.out.println(this.displayInformation() + " is starting the engine");
+    }
+
     public static void main(String[] args) {
         System.out.println("Hello world from a Car class");
         Car car1 = new Car ();
@@ -20,9 +28,13 @@ public class Car {
         car3.model = "Model X";
         car3.year = 2023;
 
-        System.err.println("Car 1: " + car1.brand + " " + car1.model + " " + car1.year);
-        System.err.println("Car 2: " + car2.brand + " " + car2.model + " " + car2.year);
-        System.err.println("Car 3: " + car3.brand + " " + car3.model + " " + car3.year);
+        System.out.println(car1.displayInformation());
+        System.out.println(car2.displayInformation());
+        System.out.println(car3.displayInformation());
+
+        car1.startEngine();
+        car2.startEngine();
+        car3.startEngine();
     }
 
 }
