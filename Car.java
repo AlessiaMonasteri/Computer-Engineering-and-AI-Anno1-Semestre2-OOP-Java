@@ -1,10 +1,36 @@
 public class Car {
     String brand;
+
+    String getBrand(){
+        return this.brand;
+    }
+
+    void setBrand(String brand){
+        this.brand = brand;
+    }
+
     String model;
+    
+    public String getModel() {
+        return model;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+
     int year;
 
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
+
     String displayInformation(){
-        return "Car: " + this.brand + " " + this.model + " " + this.year;
+        return "Car: " + this.getBrand() + " " + this.getModel() + " " + this.getYear();
     }
 
     void startEngine(){
@@ -14,19 +40,19 @@ public class Car {
     public static void main(String[] args) {
         System.out.println("Hello world from a Car class");
         Car car1 = new Car ();
-        car1.brand = "Tesla";
-        car1.model = "Model S";
-        car1.year = 2024;
+        car1.setBrand("Tesla");
+        car1.setModel("Model S");
+        car1.setYear(2024);
 
         Car car2 = new Car ();
-        car2.brand = "Ford";
-        car2.model = "Focus";
-        car2.year = 2018;
+        car2.setBrand("Ford");
+        car2.setModel("Focus");
+        car2.setYear(2018);
 
         Car car3 = new Car ();
-        car3.brand = "Tesla";
-        car3.model = "Model X";
-        car3.year = 2023;
+        car3.setBrand("Tesla");
+        car3.setModel("Model X");
+        car3.setYear(2023);
 
         System.out.println(car1.displayInformation());
         System.out.println(car2.displayInformation());
@@ -38,3 +64,6 @@ public class Car {
     }
 
 }
+
+//possiamo incapsulare le variabili di istanza usando Getter e Setter (ctrl + . su year, model, brand e li crea da solo)
+
