@@ -1,23 +1,28 @@
 public class Car {
-    String brand;
-    String model;
-    int year;
-    double fuelLevel = 0.0;
-    double maxFuelTankLevel;
+    private String brand;
+    private String model;
+    private int year;
+    private double fuelLevel = 0.0;
+    private final double maxFuelTankLevel;
 
-    Car(String brand, String model, int year, double maxFuelTankLevel) {
+    private void setBrand(String brand) {
         this.brand = brand;
-        this.model = model;
-        this.year = year;
-        this.maxFuelTankLevel = maxFuelTankLevel;
     }
 
-    String getBrand(){
+    public String getBrand(){
         return this.brand;
     }
-    
+
+    private void setModel(String model) {
+        this.model = model;
+    }
+
     public String getModel() {
         return model;
+    }
+    
+    private void setYear(int year) {
+        this.year = year;
     }
 
     public int getYear() {
@@ -28,15 +33,26 @@ public class Car {
         return fuelLevel;
     }
 
-    public void setFuelLevel(double fuelLevel) {
+    public double getMaxFuelTankLevel() {
+        return maxFuelTankLevel;
+    }
+
+    Car(String brand, String model, int year, double maxFuelTankLevel) {
+        this.brand = brand;
+        this.model = model;
+        this.year = year;
+        this.maxFuelTankLevel = maxFuelTankLevel;
+    }
+
+    private void setFuelLevel(double fuelLevel) {
         this.fuelLevel = fuelLevel;
     }
 
-    boolean hasFuel () {
+    public boolean hasFuel () {
         return this.getFuelLevel() > 0;
     }
 
-    void refuel(double fuelAmount){
+    public void refuel(double fuelAmount){
         if (fuelAmount<= 0) {
             System.err.println("You cannot remove fuel from the tank");
             return;
@@ -49,7 +65,7 @@ public class Car {
         System.out.println("Refuel completed, new amount is: " + this.getFuelLevel());
         }
 
-    String displayInformation(){
+    public String displayInformation(){
         return "Car: " + this.getBrand() + " " + this.getModel() + " " + this.getYear();
     }
 
@@ -61,7 +77,7 @@ public class Car {
         this.fuelLevel -= fuelAmount;
     }
 
-    void startEngine(){
+    public void startEngine(){
         if (this.hasFuel()){
             this.consumeFuel(0.1);
             System.out.println(this.displayInformation() + " is starting the engine");
@@ -70,27 +86,7 @@ public class Car {
         }
         
     }
-
-    public static void main(String[] args) {
-        System.out.println("Hello world from a Car class");
-
-        Car car1 = new Car ("Tesla","Model S",2024, 50 );
-        car1.setFuelLevel(0.00);
-        Car car2 = new Car ("Ford", "Focus", 2018, 50);
-        car2.setFuelLevel(40.00);
-        Car car3 = new Car ("Tesla", "Model X", 2023, 70);
-        car3.setFuelLevel(30.00);
-
-        System.out.println(car1.displayInformation());
-        System.out.println(car2.displayInformation());
-        System.out.println(car3.displayInformation());
-
-        car1.startEngine();
-        car2.startEngine();
-        car3.startEngine();
-    }
-
-}
+}    
 
 //possiamo incapsulare le variabili di istanza usando Getter e Setter (ctrl + . su year, model, brand e li crea da solo)
 //un constructor è un metodo speciale che viene chiamato automaticamente quando un oggetto viene creato
