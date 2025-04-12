@@ -8,7 +8,9 @@ public class HousePatternMain{
         House simpleHouse = new House.HouseBuilder("Concrete", "Wood", "Tiles")
         .build();
         System.out.println(simpleHouse);
-        // Building a luxurious house with all features
+        
+        // chiamo i metodi opzionali e flaggo con true se lo voglio nel mio object
+        // si conclude sempre con .build();
         House luxuryHouse = new House.HouseBuilder("Concrete", "Brick", "Shingles")
         .setGarage(true)
         .setSwimmingPool(true)
