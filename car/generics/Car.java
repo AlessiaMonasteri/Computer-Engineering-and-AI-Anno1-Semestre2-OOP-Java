@@ -1,6 +1,11 @@
 package car.generics;
-
-public class Car {
+/**
+ * Generic Car Class
+ * @author Alessia Monasteri
+ * @version 13.0
+ * <ul><li> {@link #hasFuel()} : Checks if the car has fuel </li></ul>
+ */
+public class Car implements Drivable{
     private String brand;
     private String model;
     private int year;
@@ -26,7 +31,13 @@ public class Car {
     public double getMaxFuelTankLevel() {
         return maxFuelTankLevel;
     }
-
+    /**
+     * Constructs a new generic car
+     * @param brand
+     * @param model
+     * @param year
+     * @param maxFuelTankLevel
+     */
     public Car(String brand, String model, int year, double maxFuelTankLevel) {
         this.brand = brand;
         this.model = model;
@@ -34,6 +45,10 @@ public class Car {
         this.maxFuelTankLevel = maxFuelTankLevel;
     }
 
+    /**
+     * This method returns the fuel level according to the internal state
+     * @return Fuel level
+     */
     public boolean hasFuel () {
         return this.getFuelLevel() > 0;
     }
@@ -73,12 +88,4 @@ public class Car {
         
     }
 }    
-
-//possiamo incapsulare le variabili di istanza usando Getter e Setter (ctrl + . su year, model, brand e li crea da solo)
-//un constructor è un metodo speciale che viene chiamato automaticamente quando un oggetto viene creato
-//inizializza le variabili di istanza senza il bisogno di chiamate separate ai setter
-//un costruttore ha lo stesso nome della classe (nessuna keyword prima ) e nessun tipo di ritorno
-//sempre con ctrl + . Generate Constructors, flaggare tra le variabili che possono essere inizializzate quelle che ci servono
-//2 costruttori con lo stesso nome dentro la stessa classe possono coesistere purchè abbiano un elenco di parametri diversi (constructor overloading)
-
 
