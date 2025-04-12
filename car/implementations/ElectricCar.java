@@ -1,3 +1,7 @@
+package car.implementations;
+
+import car.generics.Car;
+
 public class ElectricCar extends Car {
 
     private double batteryLevel;
@@ -11,7 +15,7 @@ public class ElectricCar extends Car {
         this.batteryLevel = batteryLevel;
     }
 
-    ElectricCar(String brand, String model, int year, double maxBatteryCapacity) {
+    public ElectricCar(String brand, String model, int year, double maxBatteryCapacity) {
         super(brand, model, year, 0);
         this.batteryLevel = 0.0;
         this.maxBatteryCapacity = maxBatteryCapacity;

@@ -1,3 +1,5 @@
+package car.generics;
+
 public class Car {
     private String brand;
     private String model;
@@ -25,7 +27,7 @@ public class Car {
         return maxFuelTankLevel;
     }
 
-    Car(String brand, String model, int year, double maxFuelTankLevel) {
+    public Car(String brand, String model, int year, double maxFuelTankLevel) {
         this.brand = brand;
         this.model = model;
         this.year = year;

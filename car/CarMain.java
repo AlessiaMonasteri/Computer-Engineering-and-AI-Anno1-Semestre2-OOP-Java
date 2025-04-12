@@ -1,3 +1,8 @@
+package car;
+import car.generics.Car;
+import car.implementations.DieselCar;
+import car.implementations.ElectricCar;
+
 public class CarMain {
     public static void main(String[] args) {
         System.out.println("Hello world from a Car class");
