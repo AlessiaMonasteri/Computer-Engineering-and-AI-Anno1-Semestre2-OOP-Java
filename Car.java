@@ -2,61 +2,84 @@ public class Car {
     String brand;
     String model;
     int year;
+    double fuelLevel = 0.0;
+    double maxFuelTankLevel;
 
-    Car(String brand, String model, int year) {
+    Car(String brand, String model, int year, double maxFuelTankLevel) {
         this.brand = brand;
         this.model = model;
         this.year = year;
+        this.maxFuelTankLevel = maxFuelTankLevel;
     }
 
     String getBrand(){
         return this.brand;
     }
-
-    // void setBrand(String brand){
-    //     this.brand = brand;
-    // }
     
     public String getModel() {
         return model;
     }
 
-    // public void setModel(String model) {
-    //     this.model = model;
-    // }
-
     public int getYear() {
         return year;
     }
 
-    // public void setYear(int year) {
-    //     this.year = year;
-    // }
+    public double getFuelLevel() {
+        return fuelLevel;
+    }
+
+    public void setFuelLevel(double fuelLevel) {
+        this.fuelLevel = fuelLevel;
+    }
+
+    boolean hasFuel () {
+        return this.getFuelLevel() > 0;
+    }
+
+    void refuel(double fuelAmount){
+        if (fuelAmount<= 0) {
+            System.err.println("You cannot remove fuel from the tank");
+            return;
+        }
+        if (fuelAmount + this.fuelLevel > this.maxFuelTankLevel){
+            System.err.println("You are going to overfill the tank");
+            return;
+        }
+        this.fuelLevel += fuelAmount;
+        System.out.println("Refuel completed, new amount is: " + this.getFuelLevel());
+        }
 
     String displayInformation(){
         return "Car: " + this.getBrand() + " " + this.getModel() + " " + this.getYear();
     }
 
+    void consumeFuel(double fuelAmount){
+        if (this.fuelLevel - fuelAmount < 0){
+            System.err.println("Not enough gas to complete the operation");
+            return;
+        }
+        this.fuelLevel -= fuelAmount;
+    }
+
     void startEngine(){
-        System.out.println(this.displayInformation() + " is starting the engine");
+        if (this.hasFuel()){
+            this.consumeFuel(0.1);
+            System.out.println(this.displayInformation() + " is starting the engine");
+        } else {
+            System.err.println("Car has not fuel and cannot start the engine");
+        }
+        
     }
 
     public static void main(String[] args) {
         System.out.println("Hello world from a Car class");
-        Car car1 = new Car ("Tesla","Model S",2024 );
-        //car1.setBrand("Tesla");
-        //car1.setModel("Model S");
-        //car1.setYear(2024);
 
-        Car car2 = new Car ("Ford", "Focus", 2018);
-        //car2.setBrand("Ford");
-        //car2.setModel("Focus");
-        //car2.setYear(2018);
-
-        Car car3 = new Car ("Tesla", "Model X", 2023);
-        //car3.setBrand("Tesla");
-        //car3.setModel("Model X");
-        //car3.setYear(2023);
+        Car car1 = new Car ("Tesla","Model S",2024, 50 );
+        car1.setFuelLevel(0.00);
+        Car car2 = new Car ("Ford", "Focus", 2018, 50);
+        car2.setFuelLevel(40.00);
+        Car car3 = new Car ("Tesla", "Model X", 2023, 70);
+        car3.setFuelLevel(30.00);
 
         System.out.println(car1.displayInformation());
         System.out.println(car2.displayInformation());
