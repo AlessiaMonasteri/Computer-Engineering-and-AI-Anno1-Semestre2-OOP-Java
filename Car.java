@@ -5,24 +5,12 @@ public class Car {
     private double fuelLevel = 0.0;
     private final double maxFuelTankLevel;
 
-    private void setBrand(String brand) {
-        this.brand = brand;
-    }
-
     public String getBrand(){
         return this.brand;
     }
 
-    private void setModel(String model) {
-        this.model = model;
-    }
-
     public String getModel() {
         return model;
-    }
-    
-    private void setYear(int year) {
-        this.year = year;
     }
 
     public int getYear() {
@@ -42,10 +30,6 @@ public class Car {
         this.model = model;
         this.year = year;
         this.maxFuelTankLevel = maxFuelTankLevel;
-    }
-
-    private void setFuelLevel(double fuelLevel) {
-        this.fuelLevel = fuelLevel;
     }
 
     public boolean hasFuel () {
