@@ -10,7 +10,7 @@ public class DieselCar extends Car {
 
     @Override
     public void startEngine(){
-    //TODO: check if the filter is clean
+    //check if the filter is clean
     super.startEngine();
             
     }
