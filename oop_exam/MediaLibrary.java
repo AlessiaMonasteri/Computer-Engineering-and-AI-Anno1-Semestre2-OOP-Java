@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -9,10 +10,13 @@ public class MediaLibrary implements Media {
 
     public void addMedia(Media media) {
         mediaItems.add(media);
+        // saveToFile(); // Salva automaticamente dopo ogni aggiunta
     }
+
 
     public void removeMedia(Media media) {
         mediaItems.remove(media);
+        // saveToFile(); // Salva automaticamente dopo ogni rimozione
     }
 
     public List<Media> getMediaItems() {
@@ -59,17 +63,32 @@ public class MediaLibrary implements Media {
     }
 
 
-    public void saveToFile(String filename) {
-        String filePath = System.getProperty("user.dir") + System.getProperty("file.separator") + "library.txt";
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
-            for (Media media : mediaItems) {
-                writer.write(media.toString());
-                writer.newLine();
-            }
-        } catch (IOException e) {
-            System.err.println("Error saving to file: " + e.getMessage());
+public void saveToFile() {
+    // Ottieni il percorso della directory che contiene il file App.java (la directory principale)
+    String workingDirectory = System.getProperty("user.dir");
+    System.out.println("Working Directory: " + workingDirectory); // Verifica la directory di lavoro
+    
+    // Crea il percorso completo per la cartella 'oop_exam'
+    String folderPath = workingDirectory;
+    
+    // Crea il percorso completo per il file 'library.txt'
+    String filePath = folderPath + File.separator + "library.txt";
+    System.out.println("File Path: " + filePath); // Verifica il percorso del file
+    
+    // Scrivi gli elementi della libreria nel file, solo se il comando 12 viene eseguito
+    try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+        // Scrivi gli elementi della libreria nel file
+        for (Media media : mediaItems) {
+            writer.write(media.toString());
+            writer.newLine();
         }
+        System.out.println("Library saved successfully to: " + filePath);
+    } catch (IOException e) {
+        System.err.println("Error saving to file: " + e.getMessage());
     }
+}
+
+
 }
 
 

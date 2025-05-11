@@ -203,41 +203,64 @@ public class App {
                     break;
                 
                 case 5:
+                    // Aggiunta nuovo elemento multimediale
+                    scanner.nextLine();
                     System.out.print("What type of media would you like to add? (movie/song): ");
                     String tipo = scanner.nextLine();
-                
+
                     System.out.print("Title: ");
                     String titolo = scanner.nextLine();
-                
+
                     System.out.print("Author/Director: ");
                     String autore = scanner.nextLine();
-                
-                    System.out.print("Year: ");
-                    int anno = scanner.nextInt();
-                    scanner.nextLine();
-                
+
+                    int anno = 0;
+                    boolean annoValido = false;
+                    while (!annoValido) {
+                        System.out.print("Year: ");
+                        if (scanner.hasNextInt()) {
+                            anno = scanner.nextInt();
+                            scanner.nextLine();
+                            if (anno >= 1900 && anno <= 2100) {
+                                annoValido = true;
+                            } else {
+                                System.out.println("Invalid year. Please enter a year between 1900 and 2100.");
+                            }
+                        } else {
+                            System.out.println("Invalid input. Please enter a valid integer for the year.");
+                            scanner.nextLine();
+                        }
+                    }
+
                     System.out.print("Genre: ");
                     String genere = scanner.nextLine();
-                
+
                     String album = null;
                     if (tipo.equalsIgnoreCase("song")) {
                         System.out.print("Album: ");
                         album = scanner.nextLine();
+                        if (album.trim().isEmpty()) album = "Unknown";
                     }
-                
-                    Media nuovoMedia = MediaFactory.createMedia(tipo.toLowerCase(), titolo, autore, anno, genere, album);
-                    if (nuovoMedia != null) {
-                        mediaLibrary.addMedia(nuovoMedia);
-                        if (nuovoMedia instanceof Movie) movieLibrary.add(nuovoMedia);
-                        if (nuovoMedia instanceof Song) songLibrary.add(nuovoMedia);
-                        System.out.println("Media added successfully!");
-                    } else {
-                        System.out.println("Invalid type of media.");
+
+                    try {
+                        Media nuovoMedia = MediaFactory.createMedia(tipo.toLowerCase(), titolo, autore, anno, genere, album);
+                        if (nuovoMedia != null) {
+                            mediaLibrary.addMedia(nuovoMedia);
+                            if (nuovoMedia instanceof Movie) movieLibrary.add(nuovoMedia);
+                            if (nuovoMedia instanceof Song) songLibrary.add(nuovoMedia);
+                            System.out.println("Media added successfully!");
+                        } else {
+                            System.out.println("Invalid type of media.");
+                        }
+                    } catch (IllegalArgumentException e) {
+                        System.out.println("Error: " + e.getMessage());
                     }
                     break;
                 case 6:
+                    scanner.nextLine();  //Consuma il newline residuo dopo nextInt()
                     System.out.print("Insert media title to remove: ");
                     String titoloDaRimuovere = scanner.nextLine().trim().toLowerCase();
+
                     
                     List<Media> mediaTrovati = new ArrayList<>();
                     for (Media m : mediaLibrary.getMediaItems()) {
@@ -276,36 +299,37 @@ public class App {
                         break;
 
                 case 7:
-                System.out.print("Insert the title of the media to play: ");
-                String titleToPlay = scanner.nextLine().trim().toLowerCase();
-            
-                List<Media> mediaTrovatiDaRiprodurre = new ArrayList<>();
-                for (Media m : mediaLibrary.getMediaItems()) {
-                    if (m.getTitle().toLowerCase().equals(titleToPlay)) {
-                        mediaTrovatiDaRiprodurre.add(m);
+                    scanner.nextLine(); //Consuma il newline rimasto
+                    System.out.print("Insert the title of the media to play: ");
+                    String titleToPlay = scanner.nextLine().trim().toLowerCase();
+                
+                    List<Media> mediaTrovatiDaRiprodurre = new ArrayList<>();
+                    for (Media m : mediaLibrary.getMediaItems()) {
+                        if (m.getTitle().toLowerCase().equals(titleToPlay)) {
+                            mediaTrovatiDaRiprodurre.add(m);
+                        }
                     }
-                }
-            
-                if (mediaTrovatiDaRiprodurre.isEmpty()) {
-                    System.out.println("Media not found.");
-                } else if (mediaTrovatiDaRiprodurre.size() == 1) {
-                    mediaPlayer.play(mediaTrovatiDaRiprodurre.get(0));
-                } else {
-                    System.out.println("Multiple media items found with the same title:");
-                    for (int i = 0; i < mediaTrovatiDaRiprodurre.size(); i++) {
-                        System.out.println((i + 1) + ". " + mediaTrovatiDaRiprodurre.get(i));
-                    }
-                    System.out.print("Choose the number of the media to play: ");
-                    int sceltaPlay = scanner.nextInt();
-                    scanner.nextLine(); // Consuma invio
-            
-                    if (sceltaPlay > 0 && sceltaPlay <= mediaTrovatiDaRiprodurre.size()) {
-                        mediaPlayer.play(mediaTrovatiDaRiprodurre.get(sceltaPlay - 1));
+                
+                    if (mediaTrovatiDaRiprodurre.isEmpty()) {
+                        System.out.println("Media not found.");
+                    } else if (mediaTrovatiDaRiprodurre.size() == 1) {
+                        mediaPlayer.play(mediaTrovatiDaRiprodurre.get(0));
                     } else {
-                        System.out.println("Invalid selection.");
+                        System.out.println("Multiple media items found with the same title:");
+                        for (int i = 0; i < mediaTrovatiDaRiprodurre.size(); i++) {
+                            System.out.println((i + 1) + ". " + mediaTrovatiDaRiprodurre.get(i));
+                        }
+                        System.out.print("Choose the number of the media to play: ");
+                        int sceltaPlay = scanner.nextInt();
+                        scanner.nextLine(); // Consuma invio
+                
+                        if (sceltaPlay > 0 && sceltaPlay <= mediaTrovatiDaRiprodurre.size()) {
+                            mediaPlayer.play(mediaTrovatiDaRiprodurre.get(sceltaPlay - 1));
+                        } else {
+                            System.out.println("Invalid selection.");
+                        }
                     }
-                }
-                    break;
+                        break;
 
                 case 8:
                     mediaPlayer.pause();
@@ -328,7 +352,7 @@ public class App {
                     String fileName = "library.txt";
                     String fullPath = workingDirectory + System.getProperty("file.separator") + fileName;
 
-                    mediaLibrary.saveToFile(fullPath);
+                    mediaLibrary.saveToFile();
                     System.out.println("\nLibrary saved to: " + fullPath);
                     break;
 
