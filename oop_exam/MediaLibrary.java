@@ -66,14 +66,12 @@ public class MediaLibrary implements Media {
 public void saveToFile() {
     // Ottieni il percorso della directory che contiene il file App.java (la directory principale)
     String workingDirectory = System.getProperty("user.dir");
-    System.out.println("Working Directory: " + workingDirectory); // Verifica la directory di lavoro
     
-    // Crea il percorso completo per la cartella 'oop_exam'
+    // Crea il percorso completo
     String folderPath = workingDirectory;
     
     // Crea il percorso completo per il file 'library.txt'
     String filePath = folderPath + File.separator + "library.txt";
-    System.out.println("File Path: " + filePath); // Verifica il percorso del file
     
     // Scrivi gli elementi della libreria nel file, solo se il comando 12 viene eseguito
     try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
@@ -82,7 +80,6 @@ public void saveToFile() {
             writer.write(media.toString());
             writer.newLine();
         }
-        System.out.println("Library saved successfully to: " + filePath);
     } catch (IOException e) {
         System.err.println("Error saving to file: " + e.getMessage());
     }
