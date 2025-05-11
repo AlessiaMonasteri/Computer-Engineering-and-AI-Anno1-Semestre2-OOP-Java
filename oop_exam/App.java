@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
@@ -10,11 +9,7 @@ public class App {
 
     public static void main(String[] args) {
 
-        Map<String, User> users = new HashMap<>();
-        users.put("admin", new User("admin", "admin123"));
-        users.put("giovanni", new User("giovanni", "password1"));
-        users.put("elisa", new User("elisa", "ciao123"));
-
+        Map<String, User> users = UserLoader.loadUsersFromFile("C:\\Users\\Utente\\OneDrive\\Desktop\\Documenti\\Epicode-Laurea\\CORSI\\Anno 1\\Semestre 2\\Object Oriented Programming\\Computer-Engineering-and-AI-Anno1-Semestre2-OOP-Java\\Computer-Engineering-and-AI-Anno1-Semestre2-OOP-Java\\oop_exam\\users.properties");
 
         //Lancio dell'applicazione
         System.out.println("Launching the Media app...");
@@ -44,7 +39,7 @@ public class App {
         mediaLibrary.addMedia(MediaFactory.createMedia("song", "Like a Rolling Stone", "Bob Dylan", 1965, "Folk", "Highway 61 Revisited"));
         mediaLibrary.addMedia(MediaFactory.createMedia("song", "La Noia", "Angelina Mango", 2024, "Pop", "Poké melodrama"));
         mediaLibrary.addMedia(MediaFactory.createMedia("song", "Alba", "Ultimo", 2023, "Pop", "Alba"));
-        mediaLibrary.addMedia(MediaFactory.createMedia("song", "Amare", "La Rappresentante di Lista", 2021, "Pop", "My Mammma"));
+        mediaLibrary.addMedia(MediaFactory.createMedia("song", "Amare", "La Rappresentante di Lista", 2021, "Pop", "My Mamma"));
 
         //Creazione di 2 liste per Film e Musica
         List<Media> movieLibrary = new ArrayList<>();
