@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
@@ -17,33 +18,50 @@ public class App {
         // Creazione della libreria multimediale usando il Composite Pattern
         MediaLibrary mediaLibrary = new MediaLibrary();
 
-        // Aggiunta degli items alla libreria
-        mediaLibrary.addMedia(MediaFactory.createMedia("movie", "Interstellar", "Christopher Nolan", 2014, "Sci-Fi", null));
-        mediaLibrary.addMedia(MediaFactory.createMedia("movie", "Pulp Fiction", "Quentin Tarantino", 1994, "Crime", null));
-        mediaLibrary.addMedia(MediaFactory.createMedia("movie", "Schindler's List", "Steven Spielberg", 1993, "Drama", null));
-        mediaLibrary.addMedia(MediaFactory.createMedia("movie", "Titanic", "James Cameron", 1997, "Romance", null));
-        mediaLibrary.addMedia(MediaFactory.createMedia("movie", "Avatar", "James Cameron", 2009, "Sci-Fi", null));
-        mediaLibrary.addMedia(MediaFactory.createMedia("movie", "Inception", "Christopher Nolan", 2010, "Sci-Fi", null));
-        mediaLibrary.addMedia(MediaFactory.createMedia("movie", "The Revenant", "Alejandro González Iñárritu", 2015, "Drama", null));
-        mediaLibrary.addMedia(MediaFactory.createMedia("movie", "The Lion King", "Roger Allers, Rob Minkoff", 1994, "Animation", null));
-        mediaLibrary.addMedia(MediaFactory.createMedia("movie", "Black Panther", "Ryan Coogler", 2018, "Action", null));
-        mediaLibrary.addMedia(MediaFactory.createMedia("movie", "Gravity", "Alfonso Cuarón", 2013, "Sci-Fi", null));
+        // Aggiunta Movies
+        mediaLibrary.addMedia(MediaFactory.createMedia("movie", "Interstellar", "Christopher Nolan", 2014, "Sci-Fi", "", "", ""));
+        mediaLibrary.addMedia(MediaFactory.createMedia("movie", "Pulp Fiction", "Quentin Tarantino", 1994, "Crime", "", "", ""));
+        mediaLibrary.addMedia(MediaFactory.createMedia("movie", "Schindler's List", "Steven Spielberg", 1993, "Drama", "", "", ""));
+        mediaLibrary.addMedia(MediaFactory.createMedia("movie", "Titanic", "James Cameron", 1997, "Romance", "", "", ""));
+        mediaLibrary.addMedia(MediaFactory.createMedia("movie", "Avatar", "James Cameron", 2009, "Sci-Fi", "", "", ""));
+        mediaLibrary.addMedia(MediaFactory.createMedia("movie", "Inception", "Christopher Nolan", 2010, "Sci-Fi", "", "", ""));
+        mediaLibrary.addMedia(MediaFactory.createMedia("movie", "The Revenant", "Alejandro González Iñárritu", 2015, "Drama", "", "", ""));
+        mediaLibrary.addMedia(MediaFactory.createMedia("movie", "The Lion King", "Roger Allers, Rob Minkoff", 1994, "Animation", "", "", ""));
+        mediaLibrary.addMedia(MediaFactory.createMedia("movie", "Hereditary", "Ari Aster", 2018, "Horror", "", "", "+18"));
+        mediaLibrary.addMedia(MediaFactory.createMedia("movie", "The Conjuring", "James Wan", 2013, "Horror", "", "", "+18"));
 
 
-        mediaLibrary.addMedia(MediaFactory.createMedia("song", "Bohemian Rhapsody", "Queen", 1975, "Rock", "A Night at the Opera"));
-        mediaLibrary.addMedia(MediaFactory.createMedia("song", "Hotel California", "Eagles", 1976, "Rock", "Hotel California"));
-        mediaLibrary.addMedia(MediaFactory.createMedia("song", "Smells Like Teen Spirit", "Nirvana", 1991, "Grunge", "Nevermind"));
-        mediaLibrary.addMedia(MediaFactory.createMedia("song", "Thriller", "Michael Jackson", 1982, "Pop", "Thriller"));
-        mediaLibrary.addMedia(MediaFactory.createMedia("song", "Stairway to Heaven", "Led Zeppelin", 1971, "Rock", "Led Zeppelin IV"));
-        mediaLibrary.addMedia(MediaFactory.createMedia("song", "Imagine", "John Lennon", 1971, "Pop", "Imagine"));
-        mediaLibrary.addMedia(MediaFactory.createMedia("song", "Like a Rolling Stone", "Bob Dylan", 1965, "Folk", "Highway 61 Revisited"));
-        mediaLibrary.addMedia(MediaFactory.createMedia("song", "La Noia", "Angelina Mango", 2024, "Pop", "Poké melodrama"));
-        mediaLibrary.addMedia(MediaFactory.createMedia("song", "Alba", "Ultimo", 2023, "Pop", "Alba"));
-        mediaLibrary.addMedia(MediaFactory.createMedia("song", "Amare", "La Rappresentante di Lista", 2021, "Pop", "My Mamma"));
+        //Aggiunta Songs
+        mediaLibrary.addMedia(MediaFactory.createMedia("song", "Bohemian Rhapsody", "Queen", 1975, "Rock", "A Night at the Opera", "", ""));
+        mediaLibrary.addMedia(MediaFactory.createMedia("song", "Hotel California", "Eagles", 1976, "Rock", "Hotel California", "", ""));
+        mediaLibrary.addMedia(MediaFactory.createMedia("song", "Smells Like Teen Spirit", "Nirvana", 1991, "Grunge", "Nevermind", "", ""));
+        mediaLibrary.addMedia(MediaFactory.createMedia("song", "Thriller", "Michael Jackson", 1982, "Pop", "Thriller", "", ""));
+        mediaLibrary.addMedia(MediaFactory.createMedia("song", "Stairway to Heaven", "Led Zeppelin", 1971, "Rock", "Led Zeppelin IV", "", ""));
+        mediaLibrary.addMedia(MediaFactory.createMedia("song", "Imagine", "John Lennon", 1971, "Pop", "Imagine", "", ""));
+        mediaLibrary.addMedia(MediaFactory.createMedia("song", "Like a Rolling Stone", "Bob Dylan", 1965, "Folk", "Highway 61 Revisited", "", ""));
+        mediaLibrary.addMedia(MediaFactory.createMedia("song", "La Noia", "Angelina Mango", 2024, "Pop", "Poké melodrama", "", ""));
+        mediaLibrary.addMedia(MediaFactory.createMedia("song", "Alba", "Ultimo", 2023, "Pop", "Alba", "", ""));
+        mediaLibrary.addMedia(MediaFactory.createMedia("song", "Amare", "La Rappresentante di Lista", 2021, "Pop", "My Mamma", "", ""));
 
-        //Creazione di 2 liste per Film e Musica
+        //Aggiunta games
+        mediaLibrary.addMedia(MediaFactory.createMedia("game", "The Legend of Zelda: Breath of the Wild", "Nintendo EPD", 2017, "adventure", "", "Nintendo Switch", ""));
+        mediaLibrary.addMedia(MediaFactory.createMedia("game", "God of War", "Santa Monica Studio", 2018, "action", "", "PlayStation 4", "+18"));
+        mediaLibrary.addMedia(MediaFactory.createMedia("game", "Red Dead Redemption 2", "Rockstar Games", 2018, "action", "", "PlayStation 4 / Xbox One / PC", "+18"));
+        mediaLibrary.addMedia(MediaFactory.createMedia("game", "Super Mario Odyssey", "Nintendo EPD", 2017, "platform", "", "Nintendo Switch", ""));
+        mediaLibrary.addMedia(MediaFactory.createMedia("game", "Halo Infinite", "343 Industries", 2021, "fps", "", "Xbox Series X/S / Xbox One / PC", ""));
+
+        //Aggiunta podcast
+        mediaLibrary.addMedia(MediaFactory.createMedia("podcast", "The Daily", "The New York Times", 2017, "news", "", "", ""));
+        mediaLibrary.addMedia(MediaFactory.createMedia("podcast", "Stuff You Should Know", "iHeartRadio", 2008, "education", "", "", ""));
+        mediaLibrary.addMedia(MediaFactory.createMedia("podcast", "Serial", "Sarah Koenig", 2014, "true crime", "", "", ""));
+        mediaLibrary.addMedia(MediaFactory.createMedia("podcast", "Radiolab", "WNYC Studios", 2002, "science", "", "", ""));
+        mediaLibrary.addMedia(MediaFactory.createMedia("podcast", "Armchair Expert", "Dax Shepard", 2018, "interview", "", "", ""));
+
+        //Creazione di 4 liste per Film, Musica, Giochi, Podcast
         List<Media> movieLibrary = new ArrayList<>();
         List<Media> songLibrary = new ArrayList<>();
+        List<Media> gameLibrary = new ArrayList<>();
+        List<Media> podcastLibrary = new ArrayList<>();
 
         //Insert nella lista pertinente in base al tipo
         for (Media media : mediaLibrary.getMediaItems()) {
@@ -51,6 +69,10 @@ public class App {
                 movieLibrary.add(media);
             } else if (media instanceof Song) {
                 songLibrary.add(media);
+            } else if (media instanceof Game) {
+                gameLibrary.add(media);
+            } else if (media instanceof Podcast){
+                podcastLibrary.add(media);
             }
         }
 
@@ -67,8 +89,6 @@ public class App {
             System.out.print("Username: ");
             String inputUsername = scanner.nextLine().trim();
             String inputPassword = PasswordPrompt.getPassword("Enter your password:", scanner);
-
-        
 
             User user = users.get(inputUsername);
 
@@ -94,17 +114,19 @@ public class App {
             System.out.println("1.  Display all items in the library");
             System.out.println("2.  Display Movies");
             System.out.println("3.  Display Songs");
-            System.out.println("4.  Search for media");
-            System.out.println("5.  Add a new item");
-            System.out.println("6.  Remove an existing item");
-            System.out.println("7.  Play a media item");
-            System.out.println("8.  Pause");
-            System.out.println("9.  Resume");
-            System.out.println("10. Stop");
-            System.out.println("11. Play Next");
-            System.out.println("12. Save library to file");
-            System.out.println("13. Exit Program");
-            System.out.print("\nChoose an option (1-13): ");
+            System.out.println("4.  Display Games");
+            System.out.println("5.  Display Podcasts");
+            System.out.println("6.  Search for media");
+            System.out.println("7.  Add a new item");
+            System.out.println("8.  Remove an existing item");
+            System.out.println("9.  Play a media item");
+            System.out.println("10. Pause");
+            System.out.println("11. Resume");
+            System.out.println("12. Stop");
+            System.out.println("13. Play Next");
+            System.out.println("14. Save library to file");
+            System.out.println("15. Exit Program");
+            System.out.print("\nChoose an option (1-15): ");
             
             //Per leggere la scelta dell'utente
             choice = scanner.nextInt();
@@ -112,6 +134,15 @@ public class App {
             //Costrutto switch per eseguire azioni in base alla scelta dell'utente
             switch (choice) {
                 case 1:
+                    //Ordinamento per type dopo l'inserimento di un item
+                    mediaLibrary.getMediaItems().sort(Comparator.comparing(media -> {
+                    if (media instanceof Movie) return 1;
+                    else if (media instanceof Song) return 2;
+                    else if (media instanceof Game) return 3;
+                    else if (media instanceof Podcast) return 4;
+                    else return 5;
+                    }));
+
                     //Utilizzo dell'Iterator Pattern per scorrere la libreria
                     MediaIterator iterator = new MediaIterator(mediaLibrary.getMediaItems());
                     System.out.println("Library Contents:");
@@ -119,6 +150,7 @@ public class App {
                         System.out.println(iterator.next());
                     }
                     break;
+
                 case 2:
                     //Mostra tutti i film nella libreria
                     System.out.println("Movies in the library:");
@@ -133,7 +165,21 @@ public class App {
                         System.out.println(song);
                     }
                     break;
-                case 4:
+                case 4: 
+                    //Mostra tutte i giochi nella libreria
+                    System.out.println("Games in the library:");
+                    for (Media game : gameLibrary) {
+                        System.out.println(game);
+                    }
+                    break;
+                case 5: 
+                    //Mostra tutti i podcast nella libreria
+                    System.out.println("Podcasts in the library:");
+                    for (Media podcast : podcastLibrary) {
+                        System.out.println(podcast);
+                    }
+                    break;
+                case 6:
                     // Ricerca media per titolo, autore, anno o genere
                     System.out.println("Search media by:\n1. Title\n2. Author\n3. Year\n4. Genre");
                     System.out.print("Enter your choice (1-4): ");
@@ -179,6 +225,10 @@ public class App {
                                     searchResults.add(media);
                                 } else if (media instanceof Song && ((Song) media).getGenre().toLowerCase().contains(genreSearch)) {
                                     searchResults.add(media);
+                                } else if (media instanceof Game && ((Game) media).getGenre().toLowerCase().contains(genreSearch)) {
+                                    searchResults.add(media);
+                                } else if (media instanceof Podcast && ((Podcast) media).getGenre().toLowerCase().contains(genreSearch)) {
+                                    searchResults.add(media);
                                 }
                             }
                             break;
@@ -197,27 +247,27 @@ public class App {
                     }
                     break;
                 
-                case 5:
+                case 7:
                     // Aggiunta nuovo elemento multimediale
                     scanner.nextLine();
-                    System.out.print("What type of media would you like to add? (movie/song): ");
-                    String tipo = scanner.nextLine();
+                    System.out.print("What type of media would you like to add? (movie/song/game/podcast): ");
+                    String type = scanner.nextLine();
 
                     System.out.print("Title: ");
-                    String titolo = scanner.nextLine();
+                    String title_inserted = scanner.nextLine();
 
                     System.out.print("Author/Director: ");
-                    String autore = scanner.nextLine();
+                    String author_inserted = scanner.nextLine();
 
-                    int anno = 0;
-                    boolean annoValido = false;
-                    while (!annoValido) {
+                    int year_inserted = 0;
+                    boolean validYear = false;
+                    while (!validYear) {
                         System.out.print("Year: ");
                         if (scanner.hasNextInt()) {
-                            anno = scanner.nextInt();
+                            year_inserted = scanner.nextInt();
                             scanner.nextLine();
-                            if (anno >= 1900 && anno <= 2100) {
-                                annoValido = true;
+                            if (year_inserted >= 1900 && year_inserted <= 2100) {
+                                validYear = true;
                             } else {
                                 System.out.println("Invalid year. Please enter a year between 1900 and 2100.");
                             }
@@ -228,49 +278,79 @@ public class App {
                     }
 
                     System.out.print("Genre: ");
-                    String genere = scanner.nextLine();
+                    String genre_inserted = scanner.nextLine();
 
-                    String album = null;
-                    if (tipo.equalsIgnoreCase("song")) {
+                    String album_inserted = null;
+                    if (type.equalsIgnoreCase("song")) {
                         System.out.print("Album: ");
-                        album = scanner.nextLine();
-                        if (album.trim().isEmpty()) album = "Unknown";
+                        album_inserted = scanner.nextLine();
+                        if (album_inserted.trim().isEmpty()) album_inserted = "Unknown";
+                    }
+
+                    String console_inserted = null;
+                    if (type.equalsIgnoreCase("game")) {
+                        System.out.print("Console: ");
+                        console_inserted = scanner.nextLine();
+                        if (console_inserted.trim().isEmpty()) console_inserted = "Unknown";
+                    }
+
+                    String prohibition_inserted = null;
+                    if (type.equalsIgnoreCase("movie") || type.equalsIgnoreCase("game")) {
+                        System.out.print("Prohibition (type eventually '+18' or Enter): ");
+                        prohibition_inserted = scanner.nextLine();
+                        if (prohibition_inserted.trim().isEmpty()) prohibition_inserted = "Unknown";
                     }
 
                     try {
-                        Media nuovoMedia = MediaFactory.createMedia(tipo.toLowerCase(), titolo, autore, anno, genere, album);
-                        if (nuovoMedia != null) {
-                            mediaLibrary.addMedia(nuovoMedia);
-                            if (nuovoMedia instanceof Movie) movieLibrary.add(nuovoMedia);
-                            if (nuovoMedia instanceof Song) songLibrary.add(nuovoMedia);
-                            System.out.println("Media added successfully!");
-                        } else {
-                            System.out.println("Invalid type of media.");
+                        Media nuovoMedia = MediaFactory.createMedia(
+                            type.toLowerCase(),
+                            title_inserted,
+                            author_inserted,
+                            year_inserted,
+                            genre_inserted,
+                            album_inserted != null ? album_inserted : "",
+                            console_inserted != null ? console_inserted : "",
+                            prohibition_inserted != null ? prohibition_inserted : ""
+                        );
+                        mediaLibrary.addMedia(nuovoMedia);
+
+                        if (nuovoMedia instanceof Movie) {
+                            movieLibrary.add((Movie) nuovoMedia);
+                        } else if (nuovoMedia instanceof Song) {
+                            songLibrary.add((Song) nuovoMedia);
+                        } else if (nuovoMedia instanceof Game) {
+                            gameLibrary.add((Game) nuovoMedia);
+                        } else if (nuovoMedia instanceof Podcast) {
+                            podcastLibrary.add((Podcast) nuovoMedia);
                         }
+                        System.out.println("Media added successfully!");
                     } catch (IllegalArgumentException e) {
-                        System.out.println("Error: " + e.getMessage());
+                        System.out.println("Input error: " + e.getMessage());
+                    } catch (Exception e) {
+                        System.out.println("Media creation error: " + e.getMessage());
                     }
                     break;
-                case 6:
-                    scanner.nextLine();  //Consuma il newline residuo dopo nextInt()
-                    System.out.print("Insert media title to remove: ");
-                    String titoloDaRimuovere = scanner.nextLine().trim().toLowerCase();
 
-                    
+
+                case 8:
+                    scanner.nextLine();  // Consuma il newline residuo dopo nextInt()
+                    System.out.print("Insert media title to remove: ");
+                    String titleToRemove = scanner.nextLine().trim().toLowerCase();
+
                     List<Media> mediaTrovati = new ArrayList<>();
                     for (Media m : mediaLibrary.getMediaItems()) {
-                        if (m.getTitle().toLowerCase().equals(titoloDaRimuovere)) {
+                        if (m.getTitle().toLowerCase().equals(titleToRemove)) {
                             mediaTrovati.add(m);
                         }
                     }
-                    
+
                     if (mediaTrovati.isEmpty()) {
                         System.out.println("Media not found.");
                     } else if (mediaTrovati.size() == 1) {
-                        Media daRimuovere = mediaTrovati.get(0);
-                        mediaLibrary.removeMedia(daRimuovere);
-                        movieLibrary.remove(daRimuovere);
-                        songLibrary.remove(daRimuovere);
+                        Media toRemove = mediaTrovati.get(0);
+                        mediaLibrary.removeMedia(toRemove);
+                        movieLibrary.remove(toRemove);
+                        songLibrary.remove(toRemove);
                         System.out.println("Media removed successfully!");
                     } else {
                         System.out.println("Multiple media items found with the same title:");
@@ -278,71 +358,75 @@ public class App {
                             System.out.println((i + 1) + ". " + mediaTrovati.get(i));
                         }
                         System.out.print("Choose the number of the media to remove: ");
-                        int scelta = scanner.nextInt();
-                        scanner.nextLine(); // Consuma invio
-                    
-                        if (scelta > 0 && scelta <= mediaTrovati.size()) {
-                            Media daRimuovere = mediaTrovati.get(scelta - 1);
-                            mediaLibrary.removeMedia(daRimuovere);
-                            movieLibrary.remove(daRimuovere);
-                            songLibrary.remove(daRimuovere);
-                            System.out.println("Media removed successfully!");
-                        } else {
-                            System.out.println("Invalid selection.");
-                        }
-                    }                
-                        break;
 
-                case 7:
+                        int choice2;
+                        try {
+                            choice2 = Integer.parseInt(scanner.nextLine().trim());
+                            if (choice2 > 0 && choice2 <= mediaTrovati.size()) {
+                                Media daRimuovere = mediaTrovati.get(choice2 - 1);
+                                mediaLibrary.removeMedia(daRimuovere);
+                                movieLibrary.remove(daRimuovere);
+                                songLibrary.remove(daRimuovere);
+                                System.out.println("Media removed successfully!");
+                            } else {
+                                System.out.println("Invalid selection.");
+                            }
+                        } catch (NumberFormatException e) {
+                            System.out.println("Invalid input. Please enter a number.");
+                        }
+                    }
+                    break;
+
+                case 9:
                     scanner.nextLine(); //Consuma il newline rimasto
                     System.out.print("Insert the title of the media to play: ");
                     String titleToPlay = scanner.nextLine().trim().toLowerCase();
                 
-                    List<Media> mediaTrovatiDaRiprodurre = new ArrayList<>();
+                    List<Media> mediaFoundToPlay = new ArrayList<>();
                     for (Media m : mediaLibrary.getMediaItems()) {
                         if (m.getTitle().toLowerCase().equals(titleToPlay)) {
-                            mediaTrovatiDaRiprodurre.add(m);
+                            mediaFoundToPlay.add(m);
                         }
                     }
                 
-                    if (mediaTrovatiDaRiprodurre.isEmpty()) {
+                    if (mediaFoundToPlay.isEmpty()) {
                         System.out.println("Media not found.");
-                    } else if (mediaTrovatiDaRiprodurre.size() == 1) {
-                        mediaPlayer.play(mediaTrovatiDaRiprodurre.get(0));
+                    } else if (mediaFoundToPlay.size() == 1) {
+                        mediaPlayer.play(mediaFoundToPlay.get(0));
                     } else {
                         System.out.println("Multiple media items found with the same title:");
-                        for (int i = 0; i < mediaTrovatiDaRiprodurre.size(); i++) {
-                            System.out.println((i + 1) + ". " + mediaTrovatiDaRiprodurre.get(i));
+                        for (int i = 0; i < mediaFoundToPlay.size(); i++) {
+                            System.out.println((i + 1) + ". " + mediaFoundToPlay.get(i));
                         }
                         System.out.print("Choose the number of the media to play: ");
                         int sceltaPlay = scanner.nextInt();
                         scanner.nextLine(); // Consuma invio
                 
-                        if (sceltaPlay > 0 && sceltaPlay <= mediaTrovatiDaRiprodurre.size()) {
-                            mediaPlayer.play(mediaTrovatiDaRiprodurre.get(sceltaPlay - 1));
+                        if (sceltaPlay > 0 && sceltaPlay <= mediaFoundToPlay.size()) {
+                            mediaPlayer.play(mediaFoundToPlay.get(sceltaPlay - 1));
                         } else {
                             System.out.println("Invalid selection.");
                         }
                     }
                         break;
 
-                case 8:
+                case 10:
                     mediaPlayer.pause();
                     break;
 
-                case 9:
+                case 11:
                     mediaPlayer.resume();
                     break;
 
-                case 10:
+                case 12:
                     mediaPlayer.stop();
                     break;
 
-                case 11:
+                case 13:
                     mediaPlayer.next(mediaLibrary.getMediaItems());
                     break;
 
-                case 12:  // Salva la libreria su file con nome fisso
+                case 14:  // Salva la libreria su file con nome fisso
                     String workingDirectory = System.getProperty("user.dir");
                     String fileName = "library.txt";
                     String fullPath = workingDirectory + System.getProperty("file.separator") + fileName;
@@ -351,7 +435,7 @@ public class App {
                     System.out.println("\nLibrary saved to: " + fullPath);
                     break;
 
-                case 13:
+                case 15:
                     System.out.println("Exiting program...");
                     break;
 
@@ -359,7 +443,7 @@ public class App {
                     System.out.println("Invalid choice, retry.");
             }
 
-        } while (choice != 13);
+        } while (choice != 15);
 
         scanner.close();
     }

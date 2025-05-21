@@ -1,18 +1,15 @@
 
-
-public class Song implements Media {
+public class Podcast implements Media{
     private String title;
     private String author;
     private int year;
     private String genre;
-    private String album;
 
-    public Song(String title, String author, int year, String genre, String album) {
+    public Podcast(String title, String author, int year, String genre) {
         this.title = title;
         this.author = author;
         this.year = year;
         this.genre = genre;
-        this.album = album;
     }
 
     @Override
@@ -37,12 +34,11 @@ public class Song implements Media {
 
     @Override
     public String toString() {
-        return "Song: " + title + " | " + year + " | " + author + " | " + genre + " | Album: " + album;
+        return "Podcast: " + title + " | " + year + " | " + author + " | " + genre;
     }
 
-    public void play() {
-        System.out.println("Now playing song: " + getTitle());
+        public void play() {
+        System.out.println("Now playing podcast: " + getTitle());
     }
-    
+
 }
-

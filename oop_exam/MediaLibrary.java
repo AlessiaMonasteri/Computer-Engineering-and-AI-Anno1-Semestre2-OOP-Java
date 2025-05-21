@@ -25,12 +25,11 @@ public class MediaLibrary implements Media {
 
     @Override
     public String getTitle() {
-        return "Media Library";
-    }
-
-    @Override
-    public String getGenre() {
-        return "Various";
+        // Esempio: restituisce l'autore del primo media disponibile nella libreria
+        if (mediaItems.isEmpty()) {
+            throw new UnsupportedOperationException("No media in the library.");
+        }
+        return mediaItems.get(0).getTitle(); // Supponiamo che mediaItems sia la lista degli oggetti media
     }
 
     @Override
@@ -60,6 +59,15 @@ public class MediaLibrary implements Media {
             throw new UnsupportedOperationException("No media in the library.");
         }
         return mediaItems.get(0).getAuthor(); // Supponiamo che mediaItems sia la lista degli oggetti media
+    }
+
+    @Override
+    public String getGenre() {
+        // Esempio: restituisce l'autore del primo media disponibile nella libreria
+        if (mediaItems.isEmpty()) {
+            throw new UnsupportedOperationException("No media in the library.");
+        }
+        return mediaItems.get(0).getGenre(); // Supponiamo che mediaItems sia la lista degli oggetti media
     }
 
 
