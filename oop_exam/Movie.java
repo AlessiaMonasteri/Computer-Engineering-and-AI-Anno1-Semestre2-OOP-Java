@@ -34,8 +34,8 @@ public class Movie implements Media {
         return this.genre;
     }
 
-    public void getProhibition(String prohibition) {
-        this.prohibition = prohibition;
+    public String getProhibition() {
+        return prohibition;
     }
 
     @Override

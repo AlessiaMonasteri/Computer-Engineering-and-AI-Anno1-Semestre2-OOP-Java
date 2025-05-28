@@ -36,6 +36,11 @@ public class Song implements Media {
     }
 
     @Override
+    public String getProhibition() {
+        return "";
+    }
+
+    @Override
     public String toString() {
         return "Song: " + title + " | " + year + " | " + author + " | " + genre + " | Album: " + album;
     }

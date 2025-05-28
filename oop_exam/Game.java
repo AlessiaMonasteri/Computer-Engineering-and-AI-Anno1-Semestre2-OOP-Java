@@ -36,8 +36,8 @@ public class Game implements Media {
         return this.genre;
     }
 
-    public void getProhibition(String prohibition) {
-        this.prohibition = prohibition;
+    public String getProhibition() {
+        return prohibition;
     }
 
     public String getConsole() {

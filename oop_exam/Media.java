@@ -3,4 +3,5 @@ public interface Media {
     String getGenre();
     int getYear();
     String getAuthor();
+    String getProhibition();
 }

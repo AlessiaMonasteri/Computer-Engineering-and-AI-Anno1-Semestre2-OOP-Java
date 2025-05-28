@@ -33,6 +33,14 @@ public class MediaLibrary implements Media {
     }
 
     @Override
+    public String getProhibition() {
+        if (mediaItems.isEmpty()) {
+            throw new UnsupportedOperationException("No media in the library.");
+        }
+        return mediaItems.get(0).getProhibition();
+    }
+
+    @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("Media Library:\n");

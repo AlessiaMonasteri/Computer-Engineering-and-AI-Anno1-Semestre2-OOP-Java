@@ -33,6 +33,12 @@ public class Podcast implements Media{
     }
 
     @Override
+    public String getProhibition() {
+        return "";
+    }
+
+
+    @Override
     public String toString() {
         return "Podcast: " + title + " | " + year + " | " + author + " | " + genre;
     }

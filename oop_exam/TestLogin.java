@@ -4,7 +4,6 @@ import java.util.Map;
 import java.util.HashMap;
 import org.junit.Before; 
 
-
 public class TestLogin {
 
     private Map<String, User> users;
@@ -12,18 +11,19 @@ public class TestLogin {
     @Before
     public void setup() {
         users = new HashMap<>();
-        users.put("admin", new User("admin", "admin123"));
-        users.put("giovanni", new User("giovanni", "password1"));
+        users.put("admin", new User("admin", "admin123", 1990));
     }
 
     @Test
     public void testLoginSuccess() {
         String inputUsername = "admin";
+        String inputPassword = "admin123";
 
         User user = users.get(inputUsername);
         assertNotNull(user);
         assertEquals("admin", user.getUsername());
-        assertEquals("admin123", user.getPassword());
+        assertTrue(user.checkPassword(inputPassword));
+        assertTrue(user.getAge() > 0);  // controlla che l’età venga calcolata
     }
 
     @Test
@@ -33,6 +33,6 @@ public class TestLogin {
 
         User user = users.get(inputUsername);
         assertNotNull(user);
-        assertNotEquals(inputPassword, user.getPassword());
+        assertFalse(user.checkPassword(inputPassword));
     }
 }

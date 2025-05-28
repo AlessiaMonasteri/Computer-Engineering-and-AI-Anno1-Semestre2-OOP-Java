@@ -10,7 +10,11 @@ public class App {
 
     public static void main(String[] args) {
 
-        Map<String, User> users = UserLoader.loadUsersFromFile("C:\\Users\\Utente\\OneDrive\\Desktop\\Documenti\\Epicode-Laurea\\CORSI\\Anno 1\\Semestre 2\\Object Oriented Programming\\Computer-Engineering-and-AI-Anno1-Semestre2-OOP-Java\\Computer-Engineering-and-AI-Anno1-Semestre2-OOP-Java\\oop_exam\\users.properties");
+        Map<String, User> users = UserLoader.loadUsersFromFile(
+        "C:\\Users\\Utente\\OneDrive\\Desktop\\Documenti\\Epicode-Laurea\\CORSI\\Anno 1\\Semestre 2\\Object Oriented Programming\\Computer-Engineering-and-AI-Anno1-Semestre2-OOP-Java\\Computer-Engineering-and-AI-Anno1-Semestre2-OOP-Java\\oop_exam\\users.properties",
+        "C:\\Users\\Utente\\OneDrive\\Desktop\\Documenti\\Epicode-Laurea\\CORSI\\Anno 1\\Semestre 2\\Object Oriented Programming\\Computer-Engineering-and-AI-Anno1-Semestre2-OOP-Java\\Computer-Engineering-and-AI-Anno1-Semestre2-OOP-Java\\oop_exam\\users_ages.properties"
+    );
+
 
         //Lancio dell'applicazione
         System.out.println("Launching the Media app...");
@@ -84,16 +88,24 @@ public class App {
 
         boolean loggedIn = false;
         int loginAttempts = 3;
-
+        User user = null;
+        
         while (!loggedIn && loginAttempts > 0) {
             System.out.print("Username: ");
             String inputUsername = scanner.nextLine().trim();
             String inputPassword = PasswordPrompt.getPassword("Enter your password:", scanner);
 
-            User user = users.get(inputUsername);
+            user = users.get(inputUsername);
 
             if (user != null && user.getPassword().equals(inputPassword)) {
                 System.out.println("Login successful. Welcome, " + user.getUsername() + "!");
+                //se non viene inserita l'età, invece di mostrare un numero molto negativo (che non avrebbe senso), mostra Unknown age come msg iniziale. Non è comunque permesso guardare contenuti VM18
+                //vedi riga 20 UserLoader.java
+                if (user.getAge()<0){
+                   System.out.println("User age: Unknown age"); 
+                } else {
+                System.out.println("User age: " + user.getAge());
+                }
                 loggedIn = true;
             } else {
                 loginAttempts--;
@@ -291,10 +303,20 @@ public class App {
 
                     
                     case 7:
-                        // Aggiunta nuovo elemento multimediale
-                        scanner.nextLine();
-                        System.out.print("What type of media would you like to add? (movie/song/game/podcast): ");
-                        String type = scanner.nextLine();
+                        boolean validType = false;
+                        String type = "";
+
+                        while (!validType) {
+                            System.out.print("What type of media would you like to add? (movie/song/game/podcast): ");
+                            type = scanner.nextLine().trim().toLowerCase();
+                            if (type.equals("movie") || type.equals("song") || type.equals("game") || type.equals("podcast")) {
+                                validType = true;
+                            } else {
+                                System.out.println("Invalid type! Please enter one of the following: movie, song, game, podcast.");
+                            }
+                        }
+
+
 
                         System.out.print("Title: ");
                         String title_inserted = scanner.nextLine();
@@ -341,7 +363,7 @@ public class App {
                         if (type.equalsIgnoreCase("movie") || type.equalsIgnoreCase("game")) {
                             System.out.print("Prohibition (type eventually '+18' or Enter): ");
                             prohibition_inserted = scanner.nextLine();
-                            if (prohibition_inserted.trim().isEmpty()) prohibition_inserted = "Unknown";
+                            if (prohibition_inserted.trim().isEmpty()) prohibition_inserted = "";
                         }
 
                         try {
@@ -376,7 +398,7 @@ public class App {
 
 
                     case 8:
-                        scanner.nextLine();  // Consuma il newline residuo dopo nextInt()
+                        scanner.nextLine(); // Consuma il newline residuo
                         System.out.print("Insert media title to remove: ");
                         String titleToRemove = scanner.nextLine().trim().toLowerCase();
 
@@ -421,21 +443,26 @@ public class App {
                         break;
 
                     case 9:
-                        scanner.nextLine(); //Consuma il newline rimasto
+                        
                         System.out.print("Insert the title of the media to play: ");
                         String titleToPlay = scanner.nextLine().trim().toLowerCase();
-                    
+
                         List<Media> mediaFoundToPlay = new ArrayList<>();
                         for (Media m : mediaLibrary.getMediaItems()) {
                             if (m.getTitle().toLowerCase().equals(titleToPlay)) {
                                 mediaFoundToPlay.add(m);
                             }
                         }
-                    
+
                         if (mediaFoundToPlay.isEmpty()) {
                             System.out.println("Media not found.");
                         } else if (mediaFoundToPlay.size() == 1) {
-                            mediaPlayer.play(mediaFoundToPlay.get(0));
+                            Media selectedMedia = mediaFoundToPlay.get(0);
+                            if (selectedMedia.getProhibition().equals("+18") && user.getAge() < 18) {
+                                System.out.println("Access denied: You must be at least 18 years old to view this content.");
+                            } else {
+                                mediaPlayer.play(selectedMedia);
+                            }
                         } else {
                             System.out.println("Multiple media items found with the same title:");
                             for (int i = 0; i < mediaFoundToPlay.size(); i++) {
@@ -444,14 +471,20 @@ public class App {
                             System.out.print("Choose the number of the media to play: ");
                             int sceltaPlay = scanner.nextInt();
                             scanner.nextLine(); // Consuma invio
-                    
+
                             if (sceltaPlay > 0 && sceltaPlay <= mediaFoundToPlay.size()) {
-                                mediaPlayer.play(mediaFoundToPlay.get(sceltaPlay - 1));
+                                Media selectedMedia = mediaFoundToPlay.get(sceltaPlay - 1);
+                                if (selectedMedia.getProhibition().equals("+18") && user.getAge() < 18) {
+                                    System.out.println("Access denied: You must be at least 18 years old to view this content.");
+                                } else {
+                                    mediaPlayer.play(selectedMedia);
+                                }
                             } else {
                                 System.out.println("Invalid selection.");
                             }
                         }
-                            break;
+                        break;
+
 
                     case 10:
                         mediaPlayer.pause();
@@ -486,5 +519,6 @@ public class App {
 
         scanner.close();
     }
-    }
+}
+
 
