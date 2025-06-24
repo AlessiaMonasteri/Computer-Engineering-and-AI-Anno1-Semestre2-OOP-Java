@@ -74,11 +74,15 @@ public class Podcast implements Media{
 
     @Override
     public boolean isPlaying() {
+        playing = true;
+        paused = false;
         return playing;
     }
 
     @Override
     public boolean isPaused() {
+        paused = true;
+        playing = false;
         return paused;
     }
 

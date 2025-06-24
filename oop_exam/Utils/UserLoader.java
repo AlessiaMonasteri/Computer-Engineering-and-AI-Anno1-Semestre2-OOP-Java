@@ -19,6 +19,9 @@ public class UserLoader {
                     String[] parts = line.split("=", 2);
                     String username = parts[0].trim();
                     String password = parts[1].trim();
+                    //Il default dell'anno di nascita è settato su un numero molto grande (3000),
+                    //in modo tale che se non viene inserito nessun anno per cercare di bypassare il controllo VM18,
+                    //l'età calcolata sarà un numero molto negativo (che comparità come Unknown Age)
                     int birthYear = ages.getOrDefault(username,3000);
                     users.put(username, new User(username, password, birthYear));
                 }

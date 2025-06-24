@@ -396,11 +396,78 @@ public class App {
                         }
 
                         //Insert del campo Prohibition (presente solo nei Film o nei Games)
-                        String prohibition_inserted = null;
-                        if (type.equalsIgnoreCase("movie") || type.equalsIgnoreCase("game")) {
-                            System.out.print("Prohibition (type eventually 'VM18' or Enter): ");
-                            prohibition_inserted = scanner.nextLine().replaceAll("[^a-zA-Z0-9\\s]", "").trim().toLowerCase();
-                            if (prohibition_inserted.trim().isEmpty()) prohibition_inserted = "";
+
+                        String prohibitionInserted = null;
+                        int min = 0, max = 0, prohibitionChoice;
+                        String submenuGame = "Choose the PEGI:\n1. PEGI 3\n2. PEGI 7\n3. PEGI 12\n4. PEGI 16\n5. PEGI 18\n";
+                        if (type.equalsIgnoreCase("game")) {
+                            min = 1; max = 5;
+                            System.out.println(submenuGame);
+                            do {
+                                //controlla il range
+                                System.out.print("Insert a valid number between " + min + " and " + max + ":\n");
+                                while (!scanner.hasNextInt()) {
+                                    //controlla che venga inserito un numero
+                                    System.out.println("Insert a valid number between " + min + " and " + max + ":");
+                                    //Scarta l'input errato
+                                    scanner.next(); 
+                                    continue;
+                                }
+                            prohibitionChoice = scanner.nextInt();
+                        } while (prohibitionChoice < min || prohibitionChoice > max);
+                                                if (type.equalsIgnoreCase("game")) {
+                            switch (prohibitionChoice) {
+                                case 1:
+                                    prohibitionInserted = "PEGI 3";
+                                    break;
+                                case 2:
+                                    prohibitionInserted = "PEGI 7";
+                                    break;
+                                case 3:
+                                    prohibitionInserted = "PEGI 12";
+                                    break;
+                                case 4:
+                                    prohibitionInserted = "PEGI 16";
+                                    break;
+                                case 5:
+                                    prohibitionInserted = "PEGI 18";
+                                    break;
+                            }
+                        } 
+                        } 
+
+                        if (type.equalsIgnoreCase("movie")) {
+                            min = 1; max = 4;
+                            String submenuMovie = "Choose the VM:\n1. VM 14\n2. VM 16\n3. VM 18\n4. No restriction\n";
+                            System.out.print(submenuMovie);
+                            do {
+                                //controlla il range
+                                System.out.print("Insert a valid number between " + min + " and " + max + ":\n");
+                                while (!scanner.hasNextInt()) {
+                                    //controlla che venga inserito un numero
+                                    System.out.println("Insert a valid number between " + min + " and " + max + ":");
+                                    //Scarta l'input errato
+                                    scanner.next(); 
+                                    continue;
+                                }
+                            prohibitionChoice = scanner.nextInt();
+                            } while (prohibitionChoice < min || prohibitionChoice > max);
+                                                    if (type.equalsIgnoreCase("movie")){
+                            switch (prohibitionChoice) {
+                                case 1:
+                                    prohibitionInserted = "VM14";
+                                    break;
+                                case 2:
+                                    prohibitionInserted = "VM16";
+                                    break;
+                                case 3:
+                                    prohibitionInserted = "VM18";
+                                    break;
+                                case 4:
+                                    prohibitionInserted = null;
+                                    break;
+                            }
+                        }
                         }
 
                         //Aggiunta alla libreria
@@ -413,7 +480,7 @@ public class App {
                                 genre_inserted,
                                 album_inserted != null ? album_inserted : "",
                                 console_inserted != null ? console_inserted : "",
-                                prohibition_inserted != null ? prohibition_inserted : ""
+                                prohibitionInserted != null ? prohibitionInserted : ""
                             );
                             mediaLibrary.addMedia(newMedia);
 
@@ -515,7 +582,7 @@ public class App {
                             if (selectedMedia.getProhibition().equals("VM18") && user.getAge() < 18) {
                                 System.out.println("Access denied: You must be at least 18 years old to play this content.");
                             } else {
-                                mediaPlayer.play(selectedMedia);
+                                mediaPlayer.play(selectedMedia, user);
                             }
                         } else {
                             //Caso in cui ho piu' titoli uguali
@@ -534,7 +601,7 @@ public class App {
                                 if (selectedMedia.getProhibition().equals("VM18") && user.getAge() < 18) {
                                     System.out.println("Access denied: You must be at least 18 years old to view this content.");
                                 } else {
-                                    mediaPlayer.play(selectedMedia);
+                                    mediaPlayer.play(selectedMedia, user);
                                 }
                             } else {
                                 System.out.println("Invalid selection.");

@@ -2,58 +2,66 @@ package Library;
 
 import java.util.List;
 
+import Utils.User;
+
 public class MediaPlayer {
-    private Media currentMedia = null;
+
+    private Media currentMedia;
     private boolean isPlaying = false;
     private boolean isPaused = false;
 
-    // Riproduzione del media
-    public void play(Media media) {
-        if (media == null) {
-            System.out.println("No media selected.");
-            return;
+    public void play(Media media, User user) {
+        if (media == null || user == null) return;
+
+        int userAge = user.getAge();
+        String restriction = media.getProhibition();
+        if (restriction != null && !restriction.isEmpty()) {
+            String ageStr = restriction.replaceAll("[^0-9]", "");
+            try {
+                int minAge = Integer.parseInt(ageStr);
+                if (userAge < minAge) {
+                    System.out.println("Access denied: restricted to " + minAge + "+");
+                    return;
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid restriction format");
+            }
         }
+
         currentMedia = media;
         isPlaying = true;
         isPaused = false;
+
+        if (currentMedia instanceof Movie) {
+            ((Movie) currentMedia).play();
+        }
+
         System.out.println("Playing: " + media.getTitle());
     }
 
-
-    // Pausa del media
     public void pause() {
-        if (isPlaying && !isPaused) {
+        if (currentMedia != null && isPlaying && !isPaused) {
+            isPlaying = false;
             isPaused = true;
-            System.out.println("Paused: " + currentMedia.getTitle());
-        } else {
-            System.out.println("Nothing to pause.");
+
+            if (currentMedia instanceof Movie) {
+                ((Movie) currentMedia).pause();
+            }
         }
     }
 
-    // Ripresa riproduzione
-    public void resume() {
-        if (isPlaying && isPaused) {
-            isPaused = false;
-            System.out.println("Resumed: " + currentMedia.getTitle());
-        } else {
-            System.out.println("Nothing to resume.");
-        }
-    }
-
-    // Stop riproduzione
     public void stop() {
-        if (isPlaying) {
-            System.out.println("Stopped: " + currentMedia.getTitle());
+        if (currentMedia != null) {
             isPlaying = false;
             isPaused = false;
-            currentMedia = null;
-        } else {
-            System.out.println("Nothing is playing.");
+
+            if (currentMedia instanceof Movie) {
+                ((Movie) currentMedia).stop();
+            }
         }
     }
 
-    // Riproduzione del successivo media
-    public void next(List<Media> mediaList) {
+        public void next(List<Media> mediaList) {
         if (currentMedia == null) {
             System.out.println("No media is currently playing. Starting from the beginning...");
             if (!mediaList.isEmpty()) {
@@ -72,6 +80,6 @@ public class MediaPlayer {
             }
         }
     }
-    
 }
+
 
