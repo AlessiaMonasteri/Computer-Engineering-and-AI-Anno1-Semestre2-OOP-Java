@@ -404,10 +404,9 @@ public class App {
                             min = 1; max = 5;
                             System.out.println(submenuGame);
                             do {
-                                //controlla il range
                                 System.out.print("Insert a valid number between " + min + " and " + max + ":\n");
                                 while (!scanner.hasNextInt()) {
-                                    //controlla che venga inserito un numero
+                                    //controlla che venga inserito un numero nel range
                                     System.out.println("Insert a valid number between " + min + " and " + max + ":");
                                     //Scarta l'input errato
                                     scanner.next(); 
@@ -441,10 +440,9 @@ public class App {
                             String submenuMovie = "Choose the VM:\n1. VM 14\n2. VM 16\n3. VM 18\n4. No restriction\n";
                             System.out.print(submenuMovie);
                             do {
-                                //controlla il range
                                 System.out.print("Insert a valid number between " + min + " and " + max + ":\n");
                                 while (!scanner.hasNextInt()) {
-                                    //controlla che venga inserito un numero
+                                    //controlla che venga inserito un numero nel range
                                     System.out.println("Insert a valid number between " + min + " and " + max + ":");
                                     //Scarta l'input errato
                                     scanner.next(); 
