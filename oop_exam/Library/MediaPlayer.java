@@ -1,7 +1,6 @@
 package Library;
 
 import java.util.List;
-
 import Utils.User;
 
 public class MediaPlayer {
@@ -12,21 +11,6 @@ public class MediaPlayer {
 
     public void play(Media media, User user) {
         if (media == null || user == null) return;
-
-        int userAge = user.getAge();
-        String restriction = media.getProhibition();
-        if (restriction != null && !restriction.isEmpty()) {
-            String ageStr = restriction.replaceAll("[^0-9]", "");
-            try {
-                int minAge = Integer.parseInt(ageStr);
-                if (userAge < minAge) {
-                    System.out.println("Access denied: restricted to " + minAge + "+");
-                    return;
-                }
-            } catch (NumberFormatException e) {
-                System.out.println("Invalid restriction format");
-            }
-        }
 
         currentMedia = media;
         isPlaying = true;
@@ -47,7 +31,7 @@ public class MediaPlayer {
             if (currentMedia instanceof Movie) {
                 ((Movie) currentMedia).pause();
             }
-        }
+        } else {System.out.println("Nothing to pause");}
     }
 
     public void stop() {
@@ -58,7 +42,7 @@ public class MediaPlayer {
             if (currentMedia instanceof Movie) {
                 ((Movie) currentMedia).stop();
             }
-        }
+        } else {System.out.println("Nothing to stop");}
     }
 
         public void next(List<Media> mediaList) {

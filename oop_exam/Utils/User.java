@@ -29,6 +29,27 @@ public class User {
         int currentYear = Year.now().getValue();
         return currentYear - birthYear;
     }
+
+    public static int getRequiredAge(String prohibition) {
+        switch (prohibition) {
+            case "VM 18":
+            case "PEGI 18":
+                return 18;
+            case "VM 16":
+            case "PEGI 16":
+                return 16;
+            case "VM 14":
+                return 14;
+            case "PEGI 12":
+                return 12;
+            case "PEGI 7":
+                return 7;
+            case "PEGI 3":
+                return 3;
+            default:
+                return 0;
+        }
+    }
     
     public boolean checkPassword(String inputPassword) {
         return BCrypt.checkpw(inputPassword, this.hashedPassword);

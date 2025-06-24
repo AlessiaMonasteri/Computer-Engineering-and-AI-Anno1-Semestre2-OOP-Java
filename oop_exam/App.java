@@ -39,8 +39,8 @@ public class App {
         mediaLibrary.addMedia(MediaFactory.createMedia("movie", "Inception", "Christopher Nolan", 2010, "Sci-Fi", "", "", ""));
         mediaLibrary.addMedia(MediaFactory.createMedia("movie", "The Revenant", "Alejandro González Iñárritu", 2015, "Drama", "", "", ""));
         mediaLibrary.addMedia(MediaFactory.createMedia("movie", "The Lion King", "Roger Allers - Rob Minkoff", 1994, "Animation", "", "", ""));
-        mediaLibrary.addMedia(MediaFactory.createMedia("movie", "Hereditary", "Ari Aster", 2018, "Horror", "", "", "VM18"));
-        mediaLibrary.addMedia(MediaFactory.createMedia("movie", "The Conjuring", "James Wan", 2013, "Horror", "", "", "VM18"));
+        mediaLibrary.addMedia(MediaFactory.createMedia("movie", "Hereditary", "Ari Aster", 2018, "Horror", "", "", "VM 18"));
+        mediaLibrary.addMedia(MediaFactory.createMedia("movie", "The Conjuring", "James Wan", 2013, "Horror", "", "", "VM 18"));
 
         //Aggiunta Songs
         mediaLibrary.addMedia(MediaFactory.createMedia("song", "Bohemian Rhapsody", "Queen", 1975, "Rock", "A Night at the Opera", "", ""));
@@ -55,11 +55,11 @@ public class App {
         mediaLibrary.addMedia(MediaFactory.createMedia("song", "Amare", "La Rappresentante di Lista", 2021, "Pop", "My Mamma", "", ""));
 
         //Aggiunta games
-        mediaLibrary.addMedia(MediaFactory.createMedia("game", "The Legend of Zelda: Breath of the Wild", "Nintendo EPD", 2017, "Adventure", "", "Nintendo Switch", ""));
-        mediaLibrary.addMedia(MediaFactory.createMedia("game", "God of War", "Santa Monica Studio", 2018, "Action", "", "PlayStation 4", "VM18"));
-        mediaLibrary.addMedia(MediaFactory.createMedia("game", "Red Dead Redemption 2", "Rockstar Games", 2018, "Action", "", "PlayStation 4 / Xbox One / PC", "VM18"));
-        mediaLibrary.addMedia(MediaFactory.createMedia("game", "Super Mario Odyssey", "Nintendo EPD", 2017, "Platform", "", "Nintendo Switch", ""));
-        mediaLibrary.addMedia(MediaFactory.createMedia("game", "Halo Infinite", "343 Industries", 2021, "Fps", "", "Xbox Series X/S / Xbox One / PC", ""));
+        mediaLibrary.addMedia(MediaFactory.createMedia("game", "The Legend of Zelda", "Nintendo EPD", 2017, "Adventure", "", "Nintendo Switch", "PEGI 16"));
+        mediaLibrary.addMedia(MediaFactory.createMedia("game", "God of War", "Santa Monica Studio", 2018, "Action", "", "PlayStation 4", "PEGI 18"));
+        mediaLibrary.addMedia(MediaFactory.createMedia("game", "Red Dead Redemption 2", "Rockstar Games", 2018, "Action", "", "PlayStation 4 / Xbox One / PC", "PEGI 18"));
+        mediaLibrary.addMedia(MediaFactory.createMedia("game", "Super Mario Odyssey", "Nintendo EPD", 2017, "Platform", "", "Nintendo Switch", "PEGI 7"));
+        mediaLibrary.addMedia(MediaFactory.createMedia("game", "Halo Infinite", "343 Industries", 2021, "Fps", "", "Xbox Series X/S / Xbox One / PC", "PEGI 16"));
 
         //Aggiunta podcast
         mediaLibrary.addMedia(MediaFactory.createMedia("podcast", "The Daily", "The New York Times", 2017, "News", "", "", ""));
@@ -501,54 +501,38 @@ public class App {
 
                     //Rimozione di un media dalla libreria in base al titolo
                     case 8:
-                        scanner.nextLine(); // Consuma il newline residuo (pulizia buffer)
                         System.out.print("Insert media title to remove: ");
-                        String titleToRemove = scanner.nextLine().replaceAll("[^a-zA-Z0-9\\s]", "").trim().toLowerCase();
-
-                        //Creazione della lista dei media trovati per la rimozione
+                        String titleToRemove = scanner.nextLine().trim().toLowerCase();
                         List<Media> mediaFound = new ArrayList<>();
-                        //Scorre tutti i media presenti nella libreria
                         for (Media m : mediaLibrary.getMediaItems()) {
                             if (m.getTitle().toLowerCase().equals(titleToRemove)) {
                                 mediaFound.add(m);
                             }
                         }
 
-                        //Se non viene trovato nulla con quel titolo
                         if (mediaFound.isEmpty()) {
                             System.out.println("Media not found.");
                         } else if (mediaFound.size() == 1) {
                             Media toRemove = mediaFound.get(0);
-                            //Rimozione libreria principale
                             mediaLibrary.removeMedia(toRemove);
-                            //Rimozione librerie specifiche
                             movieLibrary.remove(toRemove);
                             songLibrary.remove(toRemove);
-                            gameLibrary.remove(toRemove);
-                            podcastLibrary.remove(toRemove);
                             System.out.println("Media removed successfully!");
                         } else {
-                            //Se trova più media con lo stesso titolo fa scegliere all'utente quale rimuovere
                             System.out.println("Multiple media items found with the same title:");
                             for (int i = 0; i < mediaFound.size(); i++) {
                                 System.out.println((i + 1) + ". " + mediaFound.get(i));
                             }
                             System.out.print("Choose the number of the media to remove: ");
 
-                            int removalChoice;
+                            int removeChoice;
                             try {
-                                //Converte l’input inserito in numero e lo trimma
-                                removalChoice = Integer.parseInt(scanner.nextLine().replaceAll("[^a-zA-Z0-9\\s]", "").trim().toLowerCase());
-                                //Verifica che sia valido e rimuove il media dalle varie librerie
-                                if (removalChoice > 0 && removalChoice <= mediaFound.size()) {
-                                    Media toRemove = mediaFound.get(removalChoice - 1);
-                                    //Rimozione libreria principale
-                                    mediaLibrary.removeMedia(toRemove);
-                                    //Rimozione librerie specifiche
-                                    movieLibrary.remove(toRemove);
-                                    songLibrary.remove(toRemove);
-                                    gameLibrary.remove(toRemove);
-                                    podcastLibrary.remove(toRemove);
+                                removeChoice = Integer.parseInt(scanner.nextLine().trim());
+                                if (removeChoice > 0 && removeChoice <= mediaFound.size()) {
+                                    Media daRimuovere = mediaFound.get(removeChoice - 1);
+                                    mediaLibrary.removeMedia(daRimuovere);
+                                    movieLibrary.remove(daRimuovere);
+                                    songLibrary.remove(daRimuovere);
                                     System.out.println("Media removed successfully!");
                                 } else {
                                     System.out.println("Invalid selection.");
@@ -559,53 +543,65 @@ public class App {
                         }
                         break;
 
-                    case 9:
-                        //Riproduzione del media
-                        System.out.print("Insert the title of the media to play: ");
-                        String titleToPlay = scanner.nextLine().replaceAll("[^a-zA-Z0-9\\s]", "").trim().toLowerCase();
-                        //Creazione della lista dei found da riprodurre
-                        List<Media> mediaFoundToPlay = new ArrayList<>();
-                        //Ricerca
-                        for (Media m : mediaLibrary.getMediaItems()) {
-                            if (m.getTitle().toLowerCase().equals(titleToPlay)) {
-                                mediaFoundToPlay.add(m);
-                            }
-                        }
-                        //Se non viene trovato nulla con quel Title
-                        if (mediaFoundToPlay.isEmpty()) {
-                            System.out.println("Media not found.");
-                        } else if (mediaFoundToPlay.size() == 1) {
-                            Media selectedMedia = mediaFoundToPlay.get(0);
-                            //Verifica della età
-                            if (selectedMedia.getProhibition().equals("VM18") && user.getAge() < 18) {
-                                System.out.println("Access denied: You must be at least 18 years old to play this content.");
-                            } else {
-                                mediaPlayer.play(selectedMedia, user);
-                            }
-                        } else {
-                            //Caso in cui ho piu' titoli uguali
-                            System.out.println("Multiple media items found with the same title:");
-                            for (int i = 0; i < mediaFoundToPlay.size(); i++) {
-                                System.out.println((i + 1) + ". " + mediaFoundToPlay.get(i));
-                            }
-                            //Scelta dell'utente su quale riprodurre
-                            System.out.print("Choose the number of the media to play: ");
-                            int playChoice = scanner.nextInt();
-                            scanner.nextLine(); // Consuma invio
+                        case 9:
+                            // Riproduzione del media
+                            System.out.print("Insert the title of the media to play: ");
+                            String title = scanner.nextLine()
+                                                .replaceAll("[^a-zA-Z0-9\\s]", "")
+                                                .trim()
+                                                .toLowerCase();
 
-                            //Validità scelta utente
-                            if (playChoice > 0 && playChoice <= mediaFoundToPlay.size()) {
-                                Media selectedMedia = mediaFoundToPlay.get(playChoice - 1);
-                                if (selectedMedia.getProhibition().equals("VM18") && user.getAge() < 18) {
-                                    System.out.println("Access denied: You must be at least 18 years old to view this content.");
+                            // Creazione della lista dei found da riprodurre
+                            List<Media> mediaFoundToPlay = new ArrayList<>();
+                            for (Media m : mediaLibrary.getMediaItems()) {
+                                if (m.getTitle().equalsIgnoreCase(title)) {
+                                    mediaFoundToPlay.add(m);
+                                }
+                            }
+
+                            if (mediaFoundToPlay.isEmpty()) {
+                                System.out.println("Media not found.");
+                            } else if (mediaFoundToPlay.size() == 1) {
+                                Media selectedMedia = mediaFoundToPlay.get(0);
+
+                                int requiredAge = User.getRequiredAge(selectedMedia.getProhibition());
+                                if (user.getAge() < requiredAge) {
+                                    System.out.printf(
+                                        "Access denied: You must be at least %d years old to play this content.%n",
+                                        requiredAge
+                                    );
                                 } else {
                                     mediaPlayer.play(selectedMedia, user);
                                 }
+
                             } else {
-                                System.out.println("Invalid selection.");
+                                // Caso in cui ho più titoli uguali
+                                System.out.println("Multiple media items found with the same title:");
+                                for (int i = 0; i < mediaFoundToPlay.size(); i++) {
+                                    System.out.println((i + 1) + ". " + mediaFoundToPlay.get(i));
+                                }
+
+                                System.out.print("Choose the number of the media to play: ");
+                                int playChoice = scanner.nextInt();
+                                scanner.nextLine(); // consuma invio
+
+                                if (playChoice > 0 && playChoice <= mediaFoundToPlay.size()) {
+                                    Media selectedMedia = mediaFoundToPlay.get(playChoice - 1);
+
+                                    int requiredAge = User.getRequiredAge(selectedMedia.getProhibition());
+                                    if (user.getAge() < requiredAge) {
+                                        System.out.printf(
+                                            "Access denied: You must be at least %d years old to play this content.%n",
+                                            requiredAge
+                                        );
+                                    } else {
+                                        mediaPlayer.play(selectedMedia, user);
+                                    }
+                                } else {
+                                    System.out.println("Invalid selection.");
+                                }
                             }
-                        }
-                        break;
+                            break;
 
                     case 10:
                         //Pausa del media
