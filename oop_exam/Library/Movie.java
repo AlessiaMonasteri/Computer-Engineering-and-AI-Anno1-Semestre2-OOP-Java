@@ -54,15 +54,6 @@ public class Movie implements Media {
     }
 
     @Override
-    public void pause() {
-        if (playing) {
-            this.playing = false;
-            this.paused = true;
-            System.out.println("Paused movie: " + title);
-        }
-    }
-
-    @Override
     public void stop() {
         if (playing || paused) {
             this.playing = false;

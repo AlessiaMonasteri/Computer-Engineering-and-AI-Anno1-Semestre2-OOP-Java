@@ -34,14 +34,6 @@ public class TestMediaPlayer {
     }
 
     @Test
-    public void testPauseMedia() {
-        mediaPlayer.play(testMovie, currentUser);
-        mediaPlayer.pause();
-        assertTrue(testMovie.isPaused());
-        assertFalse(testMovie.isPlaying());
-    }
-
-    @Test
     public void testStopMedia() {
         mediaPlayer.play(testMovie, currentUser);
         mediaPlayer.stop();

@@ -61,15 +61,6 @@ public class Song implements Media {
     }
 
     @Override
-    public void pause() {
-        if (playing) {
-            playing = false;
-            paused = true;
-            System.out.println("Paused song: " + title);
-        }
-    }
-
-    @Override
     public void stop() {
         if (playing || paused) {
             playing = false;

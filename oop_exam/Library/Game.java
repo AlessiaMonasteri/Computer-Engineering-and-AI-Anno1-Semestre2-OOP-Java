@@ -61,15 +61,6 @@ public class Game implements Media {
     }
 
     @Override
-    public void pause() {
-        if (playing) {
-            playing = false;
-            paused = true;
-            System.out.println("Paused game: " + title);
-        }
-    }
-
-    @Override
     public void stop() {
         if (playing || paused) {
             playing = false;

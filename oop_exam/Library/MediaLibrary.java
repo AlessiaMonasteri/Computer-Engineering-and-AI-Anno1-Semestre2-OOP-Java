@@ -84,13 +84,6 @@ public class MediaLibrary implements Media {
     }
 
     @Override
-    public void pause() {
-        for (Media media : mediaItems) {
-            media.pause();
-        }
-    }
-
-    @Override
     public void stop() {
         for (Media media : mediaItems) {
             media.stop();

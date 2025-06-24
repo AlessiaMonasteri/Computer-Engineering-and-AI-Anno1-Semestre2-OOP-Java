@@ -9,39 +9,32 @@ public class MediaPlayer {
     private boolean isPlaying = false;
     private boolean isPaused = false;
 
-    public void play(Media media, User user) {
-        if (media == null || user == null) return;
+public void play(Media media, User user) {
+    if (media == null || user == null) return;
 
-        currentMedia = media;
-        isPlaying = true;
-        isPaused = false;
+    currentMedia = media;
+    isPlaying = true;
+    isPaused  = false;
 
-        if (currentMedia instanceof Movie) {
-            ((Movie) currentMedia).play();
-        }
-
-        System.out.println("Playing: " + media.getTitle());
+    if (currentMedia instanceof Movie m) {
+        m.play();
+    } else if (currentMedia instanceof Song s) {
+        s.play();
+    } else if (currentMedia instanceof Game g) {
+        g.play();
+    } else if (currentMedia instanceof Podcast p) {
+        p.play();
+    } else {
+        System.out.println("Media type not managed");
+        return;
     }
-
-    public void pause() {
-        if (currentMedia != null && isPlaying && !isPaused) {
-            isPlaying = false;
-            isPaused = true;
-
-            if (currentMedia instanceof Movie) {
-                ((Movie) currentMedia).pause();
-            }
-        } else {System.out.println("Nothing to pause");}
-    }
+}
 
     public void stop() {
-        if (currentMedia != null) {
+        if (currentMedia != null && isPlaying && !isPaused) {
             isPlaying = false;
             isPaused = false;
-
-            if (currentMedia instanceof Movie) {
-                ((Movie) currentMedia).stop();
-            }
+            currentMedia.stop();
         } else {System.out.println("Nothing to stop");}
     }
 

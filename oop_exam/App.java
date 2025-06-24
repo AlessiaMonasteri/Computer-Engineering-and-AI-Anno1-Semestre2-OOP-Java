@@ -155,25 +155,24 @@ public class App {
             System.out.println("7.  Add a new item");
             System.out.println("8.  Remove an existing item");
             System.out.println("9.  Play");
-            System.out.println("10. Pause");
-            System.out.println("11. Stop");
-            System.out.println("12. Play Next");
-            System.out.println("13. Export CSV");
-            System.out.println("14. Exit Program");
+            System.out.println("10. Stop");
+            System.out.println("11. Play Next");
+            System.out.println("12. Export CSV");
+            System.out.println("13. Exit Program");
             
             //Per leggere la scelta dell'utente
             while (true) {
-                System.out.print("\nChoose an option (1-14): ");
+                System.out.print("\nChoose an option (1-13): ");
                 if (scanner.hasNextInt()) {
                     choice = scanner.nextInt();
                     scanner.nextLine(); // Consuma newline
                     if (choice >= 1 && choice <= 15) {
                         break; // Valido
                     } else {
-                        System.out.println("Invalid input. Please enter a number between 1 and 14.");
+                        System.out.println("Invalid input. Please enter a number between 1 and 13.");
                     }
                 } else {
-                    System.out.println("Invalid input. Please enter a number between 1 and 14.");
+                    System.out.println("Invalid input. Please enter a number between 1 and 13.");
                     scanner.nextLine(); // Consuma input errato
                 }
             }
@@ -604,23 +603,18 @@ public class App {
                             break;
 
                     case 10:
-                        //Pausa del media
-                        mediaPlayer.pause();
-                        break;
-
-                    case 11:
                         //Stop del media
                         mediaPlayer.stop();
                         break;
 
-                    case 12:
+                    case 11:
                         //Riproduzione elemento succesivo
                         //NB: si procede in avanti nella libreria principale
                         //Quindi ad esempio è possibile passare dalla riproduzione di un film a una canzone
                         mediaPlayer.next(mediaLibrary.getMediaItems());
                         break;
 
-                    case 13:
+                    case 12:
                         //Export
                         if (MediaExporter.exportToCSV(mediaLibrary.getMediaItems())) {
                             System.out.println("Export completed successfully.");
@@ -629,12 +623,12 @@ public class App {
                         }
                         break;
 
-                    case 14:
+                    case 13:
                         //Uscita dal programma
                         System.out.println("Exiting program...");
                         break;
                 }
-            } while (choice != 14);
+            } while (choice != 13);
 
         scanner.close();
     }

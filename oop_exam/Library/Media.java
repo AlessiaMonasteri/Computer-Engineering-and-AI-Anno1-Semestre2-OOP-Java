@@ -9,7 +9,6 @@ public interface Media {
     String getProhibition();
 
     void play();
-    void pause();
     void stop();
 
     boolean isPlaying();
