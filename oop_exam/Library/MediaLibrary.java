@@ -1,3 +1,5 @@
+package Library;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.io.BufferedWriter;
@@ -5,18 +7,16 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+//Composite Pattern
 public class MediaLibrary implements Media {
     private List<Media> mediaItems = new ArrayList<>();
 
     public void addMedia(Media media) {
         mediaItems.add(media);
-        // saveToFile(); // Salva automaticamente dopo ogni aggiunta
     }
-
 
     public void removeMedia(Media media) {
         mediaItems.remove(media);
-        // saveToFile(); // Salva automaticamente dopo ogni rimozione
     }
 
     public List<Media> getMediaItems() {
@@ -25,11 +25,18 @@ public class MediaLibrary implements Media {
 
     @Override
     public String getTitle() {
-        // Esempio: restituisce l'autore del primo media disponibile nella libreria
         if (mediaItems.isEmpty()) {
             throw new UnsupportedOperationException("No media in the library.");
         }
-        return mediaItems.get(0).getTitle(); // Supponiamo che mediaItems sia la lista degli oggetti media
+        return mediaItems.get(0).getTitle();
+    }
+
+    @Override
+    public String getAuthor() {
+        if (mediaItems.isEmpty()) {
+            throw new UnsupportedOperationException("No media in the library.");
+        }
+        return mediaItems.get(0).getAuthor();
     }
 
     @Override
@@ -38,6 +45,25 @@ public class MediaLibrary implements Media {
             throw new UnsupportedOperationException("No media in the library.");
         }
         return mediaItems.get(0).getProhibition();
+    }
+
+
+    @Override
+    public int getYear() {
+
+        if (mediaItems.isEmpty()) {
+            throw new UnsupportedOperationException("No media in the library.");
+        }
+        return mediaItems.get(0).getYear();
+    }
+    
+
+    @Override
+    public String getGenre() {
+        if (mediaItems.isEmpty()) {
+            throw new UnsupportedOperationException("No media in the library.");
+        }
+        return mediaItems.get(0).getGenre();
     }
 
     @Override
@@ -51,45 +77,60 @@ public class MediaLibrary implements Media {
     }
 
     @Override
-    public int getYear() {
-        // Esempio: restituisce l'anno del primo media disponibile nella libreria
-        if (mediaItems.isEmpty()) {
-            throw new UnsupportedOperationException("No media in the library.");
+    public void play() {
+        for (Media media : mediaItems) {
+            media.play();
         }
-        return mediaItems.get(0).getYear(); // Supponiamo che mediaItems sia la lista degli oggetti media
-    }
-    
-
-    @Override
-    public String getAuthor() {
-        // Esempio: restituisce l'autore del primo media disponibile nella libreria
-        if (mediaItems.isEmpty()) {
-            throw new UnsupportedOperationException("No media in the library.");
-        }
-        return mediaItems.get(0).getAuthor(); // Supponiamo che mediaItems sia la lista degli oggetti media
     }
 
     @Override
-    public String getGenre() {
-        // Esempio: restituisce l'autore del primo media disponibile nella libreria
-        if (mediaItems.isEmpty()) {
-            throw new UnsupportedOperationException("No media in the library.");
+    public void pause() {
+        for (Media media : mediaItems) {
+            media.pause();
         }
-        return mediaItems.get(0).getGenre(); // Supponiamo che mediaItems sia la lista degli oggetti media
+    }
+
+    @Override
+    public void stop() {
+        for (Media media : mediaItems) {
+            media.stop();
+        }
+    }
+
+    @Override
+    public boolean isPlaying() {
+        // Torna true se almeno un media sta suonando
+        for (Media media : mediaItems) {
+            if (media.isPlaying()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean isPaused() {
+        // Torna true se almeno un media è in pausa
+        for (Media media : mediaItems) {
+            if (media.isPaused()) {
+                return true;
+            }
+        }
+        return false;
     }
 
 
 public void saveToFile() {
-    // Ottieni il percorso della directory che contiene il file App.java (la directory principale)
+    //Ottiene il percorso della directory che contiene il file App.java (la directory principale)
     String workingDirectory = System.getProperty("user.dir");
     
-    // Crea il percorso completo
+    //Crea il percorso completo
     String folderPath = workingDirectory;
     
-    // Crea il percorso completo per il file 'library.txt'
+    //Crea il percorso completo per il file 'library.txt'
     String filePath = folderPath + File.separator + "library.txt";
     
-    // Scrivi gli elementi della libreria nel file, solo se il comando 12 viene eseguito
+    //Scrive gli elementi della libreria nel file, solo se il comando 12 viene eseguito
     try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
         // Scrivi gli elementi della libreria nel file
         for (Media media : mediaItems) {
@@ -100,7 +141,6 @@ public void saveToFile() {
         System.err.println("Error saving to file: " + e.getMessage());
     }
 }
-
 
 }
 

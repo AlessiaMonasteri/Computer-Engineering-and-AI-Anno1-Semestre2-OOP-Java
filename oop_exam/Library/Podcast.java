@@ -1,9 +1,13 @@
+package Library;
 
 public class Podcast implements Media{
     private String title;
     private String author;
     private int year;
     private String genre;
+
+    private boolean playing = false;
+    private boolean paused = false;
 
     public Podcast(String title, String author, int year, String genre) {
         this.title = title;
@@ -43,8 +47,39 @@ public class Podcast implements Media{
         return "Podcast: " + title + " | " + year + " | " + author + " | " + genre;
     }
 
-        public void play() {
-        System.out.println("Now playing podcast: " + getTitle());
+     @Override
+    public void play() {
+        playing = true;
+        paused = false;
+        System.out.println("Playing podcast: " + title);
+    }
+
+    @Override
+    public void pause() {
+        if (playing) {
+            playing = false;
+            paused = true;
+            System.out.println("Paused podcast: " + title);
+        }
+    }
+
+    @Override
+    public void stop() {
+        if (playing || paused) {
+            playing = false;
+            paused = false;
+            System.out.println("Stopped podcast: " + title);
+        }
+    }
+
+    @Override
+    public boolean isPlaying() {
+        return playing;
+    }
+
+    @Override
+    public boolean isPaused() {
+        return paused;
     }
 
 }

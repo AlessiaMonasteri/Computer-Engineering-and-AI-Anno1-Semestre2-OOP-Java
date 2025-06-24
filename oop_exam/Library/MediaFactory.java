@@ -1,3 +1,5 @@
+package Library;
+
 public class MediaFactory {
     public static Media createMedia(String type, String title, String creator, int year, String genre, String album, String console, String prohibition) {
         switch (type.toLowerCase()) {

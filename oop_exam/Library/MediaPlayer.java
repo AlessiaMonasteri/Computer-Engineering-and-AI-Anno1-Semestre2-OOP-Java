@@ -1,11 +1,11 @@
+package Library;
+
 import java.util.List;
 
 public class MediaPlayer {
     private Media currentMedia = null;
     private boolean isPlaying = false;
     private boolean isPaused = false;
-
-
 
     // Riproduzione del media
     public void play(Media media) {
@@ -18,6 +18,7 @@ public class MediaPlayer {
         isPaused = false;
         System.out.println("Playing: " + media.getTitle());
     }
+
 
     // Pausa del media
     public void pause() {
@@ -51,7 +52,7 @@ public class MediaPlayer {
         }
     }
 
-    // Riproduzione del prossimo media
+    // Riproduzione del successivo media
     public void next(List<Media> mediaList) {
         if (currentMedia == null) {
             System.out.println("No media is currently playing. Starting from the beginning...");

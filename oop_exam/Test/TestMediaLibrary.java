@@ -1,6 +1,12 @@
+package Test;
+
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Before; 
+
+import Library.MediaLibrary;
+import Library.Movie;
+import Library.Media;
 
 public class TestMediaLibrary {
 
@@ -27,5 +33,22 @@ public class TestMediaLibrary {
         mediaLibrary.removeMedia(media);
         assertEquals(initialSize - 1, mediaLibrary.getMediaItems().size());
     }
+
+    @Test
+    public void testSearchByPartialTitleIgnoreCase() {
+        // La media "Inception" è già aggiunta nel setup
+        String searchInput = "cept"; // parte del titolo, in minuscolo
+        boolean found = false;
+
+        for (Media m : mediaLibrary.getMediaItems()) {
+            if (m.getTitle().toLowerCase().contains(searchInput.toLowerCase())) {
+                found = true;
+                break;
+            }
+        }
+
+        assertTrue("La ricerca dovrebbe trovare il titolo anche se è una parte e in minuscolo", found);
+    }
+
 }
 

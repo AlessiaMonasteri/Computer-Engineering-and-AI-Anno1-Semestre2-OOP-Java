@@ -1,3 +1,4 @@
+package Utils;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -7,6 +8,7 @@ import java.io.FileNotFoundException;
 public class UserLoader {
 
     public static Map<String, User> loadUsersFromFile(String userPath, String agePath) {
+
         Map<String, User> users = new HashMap<>();
         Map<String, Integer> ages = AgeLoader.loadAgesFromFile(agePath);
 

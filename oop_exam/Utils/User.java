@@ -1,13 +1,15 @@
+package Utils;
+import org.mindrot.jbcrypt.BCrypt;
 import java.time.Year;
 
 public class User {
     private String username;
-    private String password;
+    private String hashedPassword;
     private int birthYear;
 
     public User(String username, String password, int birthYear) {
         this.username = username;
-        this.password = password;
+        this.hashedPassword = password;
         this.birthYear = birthYear;
     }
 
@@ -15,8 +17,8 @@ public class User {
         return username;
     }
 
-    String getPassword() { 
-        return password;
+    public String getPassword() { 
+        return hashedPassword;
     }
 
     public int getBirthYear() {
@@ -29,6 +31,7 @@ public class User {
     }
     
     public boolean checkPassword(String inputPassword) {
-        return this.password.equals(inputPassword);
+        return BCrypt.checkpw(inputPassword, this.hashedPassword);
     }
+
 }

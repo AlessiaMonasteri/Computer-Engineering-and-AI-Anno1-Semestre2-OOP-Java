@@ -4,17 +4,25 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
+import Library.Game;
+import Library.Media;
+import Library.MediaFactory;
+import Library.MediaIterator;
+import Library.MediaLibrary;
+import Library.MediaPlayer;
+import Library.Movie;
+import Library.Podcast;
+import Library.Song;
+import Utils.MediaExporter;
+import Utils.PasswordPrompt;
+import Utils.User;
+import Utils.UserLoader;
 
 public class App {
 
-
     public static void main(String[] args) {
 
-        Map<String, User> users = UserLoader.loadUsersFromFile(
-        "C:\\Users\\Utente\\OneDrive\\Desktop\\Documenti\\Epicode-Laurea\\CORSI\\Anno 1\\Semestre 2\\Object Oriented Programming\\Computer-Engineering-and-AI-Anno1-Semestre2-OOP-Java\\Computer-Engineering-and-AI-Anno1-Semestre2-OOP-Java\\oop_exam\\users.properties",
-        "C:\\Users\\Utente\\OneDrive\\Desktop\\Documenti\\Epicode-Laurea\\CORSI\\Anno 1\\Semestre 2\\Object Oriented Programming\\Computer-Engineering-and-AI-Anno1-Semestre2-OOP-Java\\Computer-Engineering-and-AI-Anno1-Semestre2-OOP-Java\\oop_exam\\users_ages.properties"
-    );
-
+/*--------------------------------------------INITIAL CONTENT--------------------------------------------- */
 
         //Lancio dell'applicazione
         System.out.println("Launching the Media app...");
@@ -30,10 +38,9 @@ public class App {
         mediaLibrary.addMedia(MediaFactory.createMedia("movie", "Avatar", "James Cameron", 2009, "Sci-Fi", "", "", ""));
         mediaLibrary.addMedia(MediaFactory.createMedia("movie", "Inception", "Christopher Nolan", 2010, "Sci-Fi", "", "", ""));
         mediaLibrary.addMedia(MediaFactory.createMedia("movie", "The Revenant", "Alejandro González Iñárritu", 2015, "Drama", "", "", ""));
-        mediaLibrary.addMedia(MediaFactory.createMedia("movie", "The Lion King", "Roger Allers, Rob Minkoff", 1994, "Animation", "", "", ""));
-        mediaLibrary.addMedia(MediaFactory.createMedia("movie", "Hereditary", "Ari Aster", 2018, "Horror", "", "", "+18"));
-        mediaLibrary.addMedia(MediaFactory.createMedia("movie", "The Conjuring", "James Wan", 2013, "Horror", "", "", "+18"));
-
+        mediaLibrary.addMedia(MediaFactory.createMedia("movie", "The Lion King", "Roger Allers - Rob Minkoff", 1994, "Animation", "", "", ""));
+        mediaLibrary.addMedia(MediaFactory.createMedia("movie", "Hereditary", "Ari Aster", 2018, "Horror", "", "", "VM18"));
+        mediaLibrary.addMedia(MediaFactory.createMedia("movie", "The Conjuring", "James Wan", 2013, "Horror", "", "", "VM18"));
 
         //Aggiunta Songs
         mediaLibrary.addMedia(MediaFactory.createMedia("song", "Bohemian Rhapsody", "Queen", 1975, "Rock", "A Night at the Opera", "", ""));
@@ -48,18 +55,18 @@ public class App {
         mediaLibrary.addMedia(MediaFactory.createMedia("song", "Amare", "La Rappresentante di Lista", 2021, "Pop", "My Mamma", "", ""));
 
         //Aggiunta games
-        mediaLibrary.addMedia(MediaFactory.createMedia("game", "The Legend of Zelda: Breath of the Wild", "Nintendo EPD", 2017, "adventure", "", "Nintendo Switch", ""));
-        mediaLibrary.addMedia(MediaFactory.createMedia("game", "God of War", "Santa Monica Studio", 2018, "action", "", "PlayStation 4", "+18"));
-        mediaLibrary.addMedia(MediaFactory.createMedia("game", "Red Dead Redemption 2", "Rockstar Games", 2018, "action", "", "PlayStation 4 / Xbox One / PC", "+18"));
-        mediaLibrary.addMedia(MediaFactory.createMedia("game", "Super Mario Odyssey", "Nintendo EPD", 2017, "platform", "", "Nintendo Switch", ""));
-        mediaLibrary.addMedia(MediaFactory.createMedia("game", "Halo Infinite", "343 Industries", 2021, "fps", "", "Xbox Series X/S / Xbox One / PC", ""));
+        mediaLibrary.addMedia(MediaFactory.createMedia("game", "The Legend of Zelda: Breath of the Wild", "Nintendo EPD", 2017, "Adventure", "", "Nintendo Switch", ""));
+        mediaLibrary.addMedia(MediaFactory.createMedia("game", "God of War", "Santa Monica Studio", 2018, "Action", "", "PlayStation 4", "VM18"));
+        mediaLibrary.addMedia(MediaFactory.createMedia("game", "Red Dead Redemption 2", "Rockstar Games", 2018, "Action", "", "PlayStation 4 / Xbox One / PC", "VM18"));
+        mediaLibrary.addMedia(MediaFactory.createMedia("game", "Super Mario Odyssey", "Nintendo EPD", 2017, "Platform", "", "Nintendo Switch", ""));
+        mediaLibrary.addMedia(MediaFactory.createMedia("game", "Halo Infinite", "343 Industries", 2021, "Fps", "", "Xbox Series X/S / Xbox One / PC", ""));
 
         //Aggiunta podcast
-        mediaLibrary.addMedia(MediaFactory.createMedia("podcast", "The Daily", "The New York Times", 2017, "news", "", "", ""));
-        mediaLibrary.addMedia(MediaFactory.createMedia("podcast", "Stuff You Should Know", "iHeartRadio", 2008, "education", "", "", ""));
-        mediaLibrary.addMedia(MediaFactory.createMedia("podcast", "Serial", "Sarah Koenig", 2014, "true crime", "", "", ""));
-        mediaLibrary.addMedia(MediaFactory.createMedia("podcast", "Radiolab", "WNYC Studios", 2002, "science", "", "", ""));
-        mediaLibrary.addMedia(MediaFactory.createMedia("podcast", "Armchair Expert", "Dax Shepard", 2018, "interview", "", "", ""));
+        mediaLibrary.addMedia(MediaFactory.createMedia("podcast", "The Daily", "The New York Times", 2017, "News", "", "", ""));
+        mediaLibrary.addMedia(MediaFactory.createMedia("podcast", "Stuff You Should Know", "iHeartRadio", 2008, "Education", "", "", ""));
+        mediaLibrary.addMedia(MediaFactory.createMedia("podcast", "Serial", "Sarah Koenig", 2014, "True crime", "", "", ""));
+        mediaLibrary.addMedia(MediaFactory.createMedia("podcast", "Radiolab", "WNYC Studios", 2002, "Science", "", "", ""));
+        mediaLibrary.addMedia(MediaFactory.createMedia("podcast", "Armchair Expert", "Dax Shepard", 2018, "Interview", "", "", ""));
 
         //Creazione di 4 liste per Film, Musica, Giochi, Podcast
         List<Media> movieLibrary = new ArrayList<>();
@@ -80,26 +87,41 @@ public class App {
             }
         }
 
-        // Creazione di  un MediaPlayer per gestire la riproduzione
+        //Creazione di un MediaPlayer per gestire la riproduzione
         MediaPlayer mediaPlayer = new MediaPlayer();
-        
-        //Creazione della variabile choice per scegliere l'input utente
-        Scanner scanner = new Scanner(System.in);
+                
+/*--------------------------------------------LOGIN--------------------------------------------- */
 
+        //Carica dai due files le credenziali degli utenti e le loro età e li organizza in una map
+        Map<String, User> users = UserLoader.loadUsersFromFile(
+        "C:\\Users\\Utente\\OneDrive\\Desktop\\Documenti\\Epicode-Laurea\\CORSI\\Anno 1\\Semestre 2\\Object Oriented Programming\\Computer-Engineering-and-AI-Anno1-Semestre2-OOP-Java\\Computer-Engineering-and-AI-Anno1-Semestre2-OOP-Java\\oop_exam\\Utils\\users_hash.properties",
+        "C:\\Users\\Utente\\OneDrive\\Desktop\\Documenti\\Epicode-Laurea\\CORSI\\Anno 1\\Semestre 2\\Object Oriented Programming\\Computer-Engineering-and-AI-Anno1-Semestre2-OOP-Java\\Computer-Engineering-and-AI-Anno1-Semestre2-OOP-Java\\oop_exam\\Utils\\users_ages.properties"
+    );
+
+        //Numero tentativi per l'accesso
+        Scanner scanner = new Scanner(System.in);
         boolean loggedIn = false;
         int loginAttempts = 3;
         User user = null;
         
+        //Se l'utente non ha effettuato il login correttamente e ci sono ancora tentatovi di accesso disponibii
         while (!loggedIn && loginAttempts > 0) {
             System.out.print("Username: ");
             String inputUsername = scanner.nextLine().trim();
+            //Acquisizione della password mascherata
             String inputPassword = PasswordPrompt.getPassword("Enter your password:", scanner);
-
+            //Verifica dell'utente
             user = users.get(inputUsername);
-
-            if (user != null && user.getPassword().equals(inputPassword)) {
+            //Se esiste un utente con quello username e la password è corretta
+            // Sanitize input
+            if (!inputUsername.matches("^[a-zA-Z0-9_]{3,20}$")) {
+                System.out.println("Invalid username format.");
+                continue;
+            }
+            if (user != null && user.checkPassword(inputPassword)) {
                 System.out.println("Login successful. Welcome, " + user.getUsername() + "!");
-                //se non viene inserita l'età, invece di mostrare un numero molto negativo (che non avrebbe senso), mostra Unknown age come msg iniziale. Non è comunque permesso guardare contenuti VM18
+                //se non viene inserita l'età, invece di mostrare un numero molto negativo (che non avrebbe senso), mostra Unknown age come msg iniziale. 
+                //Non è comunque permesso guardare contenuti VM18
                 //vedi riga 20 UserLoader.java
                 if (user.getAge()<0){
                    System.out.println("User age: Unknown age"); 
@@ -112,12 +134,13 @@ public class App {
                 System.out.println("Invalid credentials. Attempts remaining: " + loginAttempts);
             }
         }
-
+        //Uscita dal programma a causa di troppi tentativi
         if (!loggedIn) {
             System.out.println("Too many failed login attempts. Exiting program.");
             scanner.close();
             return;
         }
+/*--------------------------------------------MENU--------------------------------------------- */
 
         int choice;
         //Voci del menu
@@ -131,27 +154,26 @@ public class App {
             System.out.println("6.  Search for media");
             System.out.println("7.  Add a new item");
             System.out.println("8.  Remove an existing item");
-            System.out.println("9.  Play a media item");
+            System.out.println("9.  Play");
             System.out.println("10. Pause");
-            System.out.println("11. Resume");
-            System.out.println("12. Stop");
-            System.out.println("13. Play Next");
-            System.out.println("14. Save library to file");
-            System.out.println("15. Exit Program");
+            System.out.println("11. Stop");
+            System.out.println("12. Play Next");
+            System.out.println("13. Export CSV");
+            System.out.println("14. Exit Program");
             
             //Per leggere la scelta dell'utente
             while (true) {
-                System.out.print("\nChoose an option (1-15): ");
+                System.out.print("\nChoose an option (1-14): ");
                 if (scanner.hasNextInt()) {
                     choice = scanner.nextInt();
                     scanner.nextLine(); // Consuma newline
                     if (choice >= 1 && choice <= 15) {
                         break; // Valido
                     } else {
-                        System.out.println("Invalid input. Please enter a number between 1 and 15.");
+                        System.out.println("Invalid input. Please enter a number between 1 and 14.");
                     }
                 } else {
-                    System.out.println("Invalid input. Please enter a number between 1 and 15.");
+                    System.out.println("Invalid input. Please enter a number between 1 and 14.");
                     scanner.nextLine(); // Consuma input errato
                 }
             }
@@ -205,6 +227,7 @@ public class App {
                         }
                         break;
                     case 6:
+                        //Ricerca di un media
                         boolean stayInSearchMenu = true;
                         while (stayInSearchMenu) {
                             System.out.println("\nSearch media by:");
@@ -216,6 +239,7 @@ public class App {
 
                             int searchChoice;
                             while (true) {
+                                //Per leggere la scelta dell'utente
                                 System.out.print("Enter your choice (1-5): ");
                                 if (scanner.hasNextInt()) {
                                     searchChoice = scanner.nextInt();
@@ -230,34 +254,37 @@ public class App {
                                     scanner.nextLine(); // Pulisce l'input errato
                                 }
                             }
-
+                            //Uscita dal sottomenu di ricerca
                             if (searchChoice == 5) {
                                 stayInSearchMenu = false;
                                 break;
                             }
-
+                            //Creazione lista per l'output di ricerca
                             List<Media> searchResults = new ArrayList<>();
 
                             switch (searchChoice) {
                                 case 1:
+                                    //Ricerca per titolo
                                     System.out.print("Enter title to search: ");
-                                    String titleSearch = scanner.nextLine().trim().toLowerCase();
+                                    String titleSearch = scanner.nextLine().replaceAll("[^a-zA-Z0-9\\s]", "").trim().toLowerCase();
                                     for (Media media : mediaLibrary.getMediaItems()) {
-                                        if (media.getTitle().toLowerCase().equals(titleSearch)) {
+                                        if (media.getTitle().toLowerCase().contains(titleSearch)) {
                                             searchResults.add(media);
                                         }
                                     }
                                     break;
                                 case 2:
+                                    //Ricerca per autore
                                     System.out.print("Enter author to search: ");
-                                    String authorSearch = scanner.nextLine().trim().toLowerCase();
+                                    String authorSearch = scanner.nextLine().replaceAll("[^a-zA-Z0-9\\s]", "").trim().toLowerCase();
                                     for (Media media : mediaLibrary.getMediaItems()) {
-                                        if (media.getAuthor().toLowerCase().equals(authorSearch)) {
+                                        if (media.getAuthor().toLowerCase().contains(authorSearch)) {
                                             searchResults.add(media);
                                         }
                                     }
                                     break;
                                 case 3:
+                                    //Ricerca per anno
                                     System.out.print("Enter year to search: ");
                                     if (scanner.hasNextInt()) {
                                         int yearSearch = scanner.nextInt();
@@ -273,12 +300,13 @@ public class App {
                                     }
                                     break;
                                 case 4:
+                                    //Ricerca per genere
                                     System.out.print("Enter genre to search: ");
-                                    String genreSearch = scanner.nextLine().trim().toLowerCase();
+                                    String genreSearch = scanner.nextLine().replaceAll("[^a-zA-Z0-9\\s]", "").trim().toLowerCase();
                                     for (Media media : mediaLibrary.getMediaItems()) {
-                                        if (media instanceof Movie && ((Movie) media).getGenre().toLowerCase().equals(genreSearch)
-                                            || media instanceof Song && ((Song) media).getGenre().toLowerCase().equals(genreSearch)
-                                            || media instanceof Game && ((Game) media).getGenre().toLowerCase().equals(genreSearch)
+                                        if (media instanceof Movie && ((Movie) media).getGenre().toLowerCase().contains(genreSearch)
+                                            || media instanceof Song && ((Song) media).getGenre().toLowerCase().contains(genreSearch)
+                                            || media instanceof Game && ((Game) media).getGenre().toLowerCase().contains(genreSearch)
                                             || media instanceof Podcast && ((Podcast) media).getGenre().toLowerCase().contains(genreSearch)) {
                                             searchResults.add(media);
                                         }
@@ -291,21 +319,24 @@ public class App {
 
                             if (!searchResults.isEmpty()) {
                                 System.out.println("Search results:");
+                                //forEach per scorrere gli elementi della collection
+                                //per ogni oggetto result di tipo Media contenuto nella collezione searchResults
                                 for (Media result : searchResults) {
                                     System.out.println(result);
                                 }
                             } else {
+                                //Si rimane nel menu di ricerca
                                 System.out.println("No media found matching the search criteria.");
-                                // Si rimane nel menu di ricerca
                             }
                         }
                         break;
 
-                    
                     case 7:
+                        //Aggiunta di un nuovo media
                         boolean validType = false;
                         String type = "";
 
+                        //validità del tipo di media inserito
                         while (!validType) {
                             System.out.print("What type of media would you like to add? (movie/song/game/podcast): ");
                             type = scanner.nextLine().trim().toLowerCase();
@@ -316,14 +347,16 @@ public class App {
                             }
                         }
 
-
-
+                        //Insert del campo Title (comune per tutti i tipi di media)
                         System.out.print("Title: ");
-                        String title_inserted = scanner.nextLine();
+                        String title_inserted = scanner.nextLine().replaceAll("[^a-zA-Z0-9\\s]", "").trim().toLowerCase();
 
+
+                        //Insert del campo Autore/Direttore (comune per tutti i tipi di media)
                         System.out.print("Author/Director: ");
-                        String author_inserted = scanner.nextLine();
+                        String author_inserted = scanner.nextLine().replaceAll("[^a-zA-Z0-9\\s]", "").trim().toLowerCase();
 
+                        //Insert del campo Anno (comune per tutti i tipi di media)
                         int year_inserted = 0;
                         boolean validYear = false;
                         while (!validYear) {
@@ -342,32 +375,37 @@ public class App {
                             }
                         }
 
+                        //Insert del campo Genere (comune per tutti i tipi di media)
                         System.out.print("Genre: ");
-                        String genre_inserted = scanner.nextLine();
+                        String genre_inserted = scanner.nextLine().replaceAll("[^a-zA-Z0-9\\s]", "").trim().toLowerCase();
 
+                        //Insert del campo Album (presente solo nelle Songs)
                         String album_inserted = null;
                         if (type.equalsIgnoreCase("song")) {
                             System.out.print("Album: ");
-                            album_inserted = scanner.nextLine();
+                            album_inserted = scanner.nextLine().replaceAll("[^a-zA-Z0-9\\s]", "").trim().toLowerCase();
                             if (album_inserted.trim().isEmpty()) album_inserted = "Unknown";
                         }
 
+                        //Insert del campo Console (presente solo nei Games)
                         String console_inserted = null;
                         if (type.equalsIgnoreCase("game")) {
                             System.out.print("Console: ");
-                            console_inserted = scanner.nextLine();
+                            console_inserted = scanner.nextLine().replaceAll("[^a-zA-Z0-9\\s]", "").trim().toLowerCase();
                             if (console_inserted.trim().isEmpty()) console_inserted = "Unknown";
                         }
 
+                        //Insert del campo Prohibition (presente solo nei Film o nei Games)
                         String prohibition_inserted = null;
                         if (type.equalsIgnoreCase("movie") || type.equalsIgnoreCase("game")) {
-                            System.out.print("Prohibition (type eventually '+18' or Enter): ");
-                            prohibition_inserted = scanner.nextLine();
+                            System.out.print("Prohibition (type eventually 'VM18' or Enter): ");
+                            prohibition_inserted = scanner.nextLine().replaceAll("[^a-zA-Z0-9\\s]", "").trim().toLowerCase();
                             if (prohibition_inserted.trim().isEmpty()) prohibition_inserted = "";
                         }
 
+                        //Aggiunta alla libreria
                         try {
-                            Media nuovoMedia = MediaFactory.createMedia(
+                            Media newMedia = MediaFactory.createMedia(
                                 type.toLowerCase(),
                                 title_inserted,
                                 author_inserted,
@@ -377,16 +415,16 @@ public class App {
                                 console_inserted != null ? console_inserted : "",
                                 prohibition_inserted != null ? prohibition_inserted : ""
                             );
-                            mediaLibrary.addMedia(nuovoMedia);
+                            mediaLibrary.addMedia(newMedia);
 
-                            if (nuovoMedia instanceof Movie) {
-                                movieLibrary.add((Movie) nuovoMedia);
-                            } else if (nuovoMedia instanceof Song) {
-                                songLibrary.add((Song) nuovoMedia);
-                            } else if (nuovoMedia instanceof Game) {
-                                gameLibrary.add((Game) nuovoMedia);
-                            } else if (nuovoMedia instanceof Podcast) {
-                                podcastLibrary.add((Podcast) nuovoMedia);
+                            if (newMedia instanceof Movie) {
+                                movieLibrary.add((Movie) newMedia);
+                            } else if (newMedia instanceof Song) {
+                                songLibrary.add((Song) newMedia);
+                            } else if (newMedia instanceof Game) {
+                                gameLibrary.add((Game) newMedia);
+                            } else if (newMedia instanceof Podcast) {
+                                podcastLibrary.add((Podcast) newMedia);
                             }
                             System.out.println("Media added successfully!");
                         } catch (IllegalArgumentException e) {
@@ -396,42 +434,56 @@ public class App {
                         }
                         break;
 
-
+                    //Rimozione di un media dalla libreria in base al titolo
                     case 8:
-                        scanner.nextLine(); // Consuma il newline residuo
+                        scanner.nextLine(); // Consuma il newline residuo (pulizia buffer)
                         System.out.print("Insert media title to remove: ");
-                        String titleToRemove = scanner.nextLine().trim().toLowerCase();
+                        String titleToRemove = scanner.nextLine().replaceAll("[^a-zA-Z0-9\\s]", "").trim().toLowerCase();
 
-                        List<Media> mediaTrovati = new ArrayList<>();
+                        //Creazione della lista dei media trovati per la rimozione
+                        List<Media> mediaFound = new ArrayList<>();
+                        //Scorre tutti i media presenti nella libreria
                         for (Media m : mediaLibrary.getMediaItems()) {
                             if (m.getTitle().toLowerCase().equals(titleToRemove)) {
-                                mediaTrovati.add(m);
+                                mediaFound.add(m);
                             }
                         }
 
-                        if (mediaTrovati.isEmpty()) {
+                        //Se non viene trovato nulla con quel titolo
+                        if (mediaFound.isEmpty()) {
                             System.out.println("Media not found.");
-                        } else if (mediaTrovati.size() == 1) {
-                            Media toRemove = mediaTrovati.get(0);
+                        } else if (mediaFound.size() == 1) {
+                            Media toRemove = mediaFound.get(0);
+                            //Rimozione libreria principale
                             mediaLibrary.removeMedia(toRemove);
+                            //Rimozione librerie specifiche
                             movieLibrary.remove(toRemove);
                             songLibrary.remove(toRemove);
+                            gameLibrary.remove(toRemove);
+                            podcastLibrary.remove(toRemove);
                             System.out.println("Media removed successfully!");
                         } else {
+                            //Se trova più media con lo stesso titolo fa scegliere all'utente quale rimuovere
                             System.out.println("Multiple media items found with the same title:");
-                            for (int i = 0; i < mediaTrovati.size(); i++) {
-                                System.out.println((i + 1) + ". " + mediaTrovati.get(i));
+                            for (int i = 0; i < mediaFound.size(); i++) {
+                                System.out.println((i + 1) + ". " + mediaFound.get(i));
                             }
                             System.out.print("Choose the number of the media to remove: ");
 
-                            int choice2;
+                            int removalChoice;
                             try {
-                                choice2 = Integer.parseInt(scanner.nextLine().trim());
-                                if (choice2 > 0 && choice2 <= mediaTrovati.size()) {
-                                    Media daRimuovere = mediaTrovati.get(choice2 - 1);
-                                    mediaLibrary.removeMedia(daRimuovere);
-                                    movieLibrary.remove(daRimuovere);
-                                    songLibrary.remove(daRimuovere);
+                                //Converte l’input inserito in numero e lo trimma
+                                removalChoice = Integer.parseInt(scanner.nextLine().replaceAll("[^a-zA-Z0-9\\s]", "").trim().toLowerCase());
+                                //Verifica che sia valido e rimuove il media dalle varie librerie
+                                if (removalChoice > 0 && removalChoice <= mediaFound.size()) {
+                                    Media toRemove = mediaFound.get(removalChoice - 1);
+                                    //Rimozione libreria principale
+                                    mediaLibrary.removeMedia(toRemove);
+                                    //Rimozione librerie specifiche
+                                    movieLibrary.remove(toRemove);
+                                    songLibrary.remove(toRemove);
+                                    gameLibrary.remove(toRemove);
+                                    podcastLibrary.remove(toRemove);
                                     System.out.println("Media removed successfully!");
                                 } else {
                                     System.out.println("Invalid selection.");
@@ -443,38 +495,43 @@ public class App {
                         break;
 
                     case 9:
-                        
+                        //Riproduzione del media
                         System.out.print("Insert the title of the media to play: ");
-                        String titleToPlay = scanner.nextLine().trim().toLowerCase();
-
+                        String titleToPlay = scanner.nextLine().replaceAll("[^a-zA-Z0-9\\s]", "").trim().toLowerCase();
+                        //Creazione della lista dei found da riprodurre
                         List<Media> mediaFoundToPlay = new ArrayList<>();
+                        //Ricerca
                         for (Media m : mediaLibrary.getMediaItems()) {
                             if (m.getTitle().toLowerCase().equals(titleToPlay)) {
                                 mediaFoundToPlay.add(m);
                             }
                         }
-
+                        //Se non viene trovato nulla con quel Title
                         if (mediaFoundToPlay.isEmpty()) {
                             System.out.println("Media not found.");
                         } else if (mediaFoundToPlay.size() == 1) {
                             Media selectedMedia = mediaFoundToPlay.get(0);
-                            if (selectedMedia.getProhibition().equals("+18") && user.getAge() < 18) {
-                                System.out.println("Access denied: You must be at least 18 years old to view this content.");
+                            //Verifica della età
+                            if (selectedMedia.getProhibition().equals("VM18") && user.getAge() < 18) {
+                                System.out.println("Access denied: You must be at least 18 years old to play this content.");
                             } else {
                                 mediaPlayer.play(selectedMedia);
                             }
                         } else {
+                            //Caso in cui ho piu' titoli uguali
                             System.out.println("Multiple media items found with the same title:");
                             for (int i = 0; i < mediaFoundToPlay.size(); i++) {
                                 System.out.println((i + 1) + ". " + mediaFoundToPlay.get(i));
                             }
+                            //Scelta dell'utente su quale riprodurre
                             System.out.print("Choose the number of the media to play: ");
-                            int sceltaPlay = scanner.nextInt();
+                            int playChoice = scanner.nextInt();
                             scanner.nextLine(); // Consuma invio
 
-                            if (sceltaPlay > 0 && sceltaPlay <= mediaFoundToPlay.size()) {
-                                Media selectedMedia = mediaFoundToPlay.get(sceltaPlay - 1);
-                                if (selectedMedia.getProhibition().equals("+18") && user.getAge() < 18) {
+                            //Validità scelta utente
+                            if (playChoice > 0 && playChoice <= mediaFoundToPlay.size()) {
+                                Media selectedMedia = mediaFoundToPlay.get(playChoice - 1);
+                                if (selectedMedia.getProhibition().equals("VM18") && user.getAge() < 18) {
                                     System.out.println("Access denied: You must be at least 18 years old to view this content.");
                                 } else {
                                     mediaPlayer.play(selectedMedia);
@@ -485,37 +542,38 @@ public class App {
                         }
                         break;
 
-
                     case 10:
+                        //Pausa del media
                         mediaPlayer.pause();
                         break;
 
                     case 11:
-                        mediaPlayer.resume();
-                        break;
-
-                    case 12:
+                        //Stop del media
                         mediaPlayer.stop();
                         break;
 
-                    case 13:
+                    case 12:
+                        //Riproduzione elemento succesivo
+                        //NB: si procede in avanti nella libreria principale
+                        //Quindi ad esempio è possibile passare dalla riproduzione di un film a una canzone
                         mediaPlayer.next(mediaLibrary.getMediaItems());
                         break;
 
-                    case 14:  // Salva la libreria su file con nome fisso
-                        String workingDirectory = System.getProperty("user.dir");
-                        String fileName = "library.txt";
-                        String fullPath = workingDirectory + System.getProperty("file.separator") + fileName;
-
-                        mediaLibrary.saveToFile();
-                        System.out.println("\nLibrary saved to: " + fullPath);
+                    case 13:
+                        //Export
+                        if (MediaExporter.exportToCSV(mediaLibrary.getMediaItems())) {
+                            System.out.println("Export completed successfully.");
+                        } else {
+                            System.out.println("Export failed. Check file path or permissions.");
+                        }
                         break;
 
-                    case 15:
+                    case 14:
+                        //Uscita dal programma
                         System.out.println("Exiting program...");
                         break;
                 }
-            } while (choice != 15);
+            } while (choice != 14);
 
         scanner.close();
     }
