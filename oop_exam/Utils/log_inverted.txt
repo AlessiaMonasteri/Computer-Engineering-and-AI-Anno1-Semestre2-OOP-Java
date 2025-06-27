@@ -1,0 +1,15 @@
+INFORMAZIONI: Exit
+giu 27, 2025 5:26:25 PM App main
+INFORMAZIONI: Media removed: [Song: Amare | 2021 | La Rappresentante di Lista | Pop | My Mamma]
+giu 27, 2025 5:26:21 PM App main
+INFORMAZIONI: Playing Song: Amare | 2021 | La Rappresentante di Lista | Pop | My Mamma
+giu 27, 2025 5:26:16 PM App main
+INFORMAZIONI: Login successful: admin
+giu 27, 2025 5:26:09 PM App main
+INFORMAZIONI: Start
+giu 27, 2025 5:26:01 PM App main
+INFORMAZIONI: Start
+giu 27, 2025 5:08:37 PM App main
+INFORMAZIONI: Start
+giu 27, 2025 5:05:49 PM App main
+

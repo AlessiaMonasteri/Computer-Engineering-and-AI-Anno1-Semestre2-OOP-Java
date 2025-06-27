@@ -30,6 +30,7 @@ public class User {
         return currentYear - birthYear;
     }
 
+    //Usata nella riproduzione di un media
     public static int getRequiredAge(String prohibition) {
         switch (prohibition) {
             case "VM 18":

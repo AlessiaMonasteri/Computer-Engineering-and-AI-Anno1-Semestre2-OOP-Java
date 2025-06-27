@@ -6,7 +6,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 
 public class AgeLoader {
-    //Carica da un file di testo del tipo nomeUtente = annoDiNascitale le date di nascita degli utenti
+    //Carica da un file di testo del tipo nomeUtente = annoNascita con le date di nascita degli utenti
     public static Map<String, Integer> loadAgesFromFile(String filePath) {
         //E costruisce una Map<String, Integer> dove la chiave è il nome utente (username) e il valore è l’anno di nascita (birthYear)
         Map<String, Integer> ages = new HashMap<>();

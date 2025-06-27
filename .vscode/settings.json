@@ -1,0 +1,10 @@
+{
+    "java.project.sourcePaths": [
+        "oop_exam"
+    ],
+    "java.project.referencedLibraries": [
+        "oop_exam\\lib\\junit-4.13.2.jar",
+        "oop_exam\\lib\\jbcrypt-0.4.jar",
+        "oop_exam\\lib\\hamcrest-core-1.3.jar"
+    ]
+}

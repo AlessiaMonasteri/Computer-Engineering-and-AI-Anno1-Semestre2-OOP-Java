@@ -1,8 +1,18 @@
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.logging.Logger;
+import java.util.logging.Level;
+import java.util.logging.FileHandler;
+import java.util.logging.SimpleFormatter;
+import java.util.logging.Handler;
 
 import Library.Game;
 import Library.Media;
@@ -18,13 +28,46 @@ import Utils.PasswordPrompt;
 import Utils.User;
 import Utils.UserLoader;
 
+
+
 public class App {
+
+/*--------------------------------------------LOGS--------------------------------------------- */
+
+    //Ottiene un'istanza del logger associata al nome della classe App
+    private static final Logger LOGGER = Logger.getLogger(App.class.getName());
+
+    //Configurazione di base del logger
+    static {
+        try {
+            //Disabilita l'output sulla console
+            LOGGER.setUseParentHandlers(false);
+            //Crea un FileHandler che scrive i log nel file app.log.
+            //Il secondo parametro true indica che il logger non sovrascrive il file ma fa l'append
+            Handler fh = new FileHandler("C:\\Users\\Utente\\OneDrive\\Desktop\\Documenti\\Epicode-Laurea\\CORSI\\Anno 1\\Semestre 2\\Object Oriented Programming\\Computer-Engineering-and-AI-Anno1-Semestre2-OOP-Java\\Computer-Engineering-and-AI-Anno1-Semestre2-OOP-Java\\oop_exam\\Utils\\app.log", true);
+            //Per scrivere i log in un formato leggibile, con data, livello, messaggio
+            fh.setFormatter(new SimpleFormatter());
+            //Aggiunge il FileHandler al logger, così i messaggi verranno scritti nel file specificato
+            LOGGER.addHandler(fh);
+            //Il logger registrerà solo i messaggi di livello INFO o superiore (INFO, WARNING, SEVERE).
+            //I livelli inferiori come FINE o CONFIG verranno ignorati.
+            LOGGER.setLevel(Level.INFO);
+            //Disattiva la copia su console fatta in automatico dal FileHandler
+            //Stessa cosa per il FileHandler: assicura che anche lui accetti solo log da INFO in su.
+            fh.setLevel(Level.INFO);
+
+        } catch (Exception e) {
+            //Se la configurazione fallisce stampa comunque a console
+            System.err.println("Failed to set up log file: " + e.getMessage());
+        }
+    }
 
     public static void main(String[] args) {
 
 /*--------------------------------------------INITIAL CONTENT--------------------------------------------- */
 
         //Lancio dell'applicazione
+        LOGGER.info("Start");
         System.out.println("Launching the Media app...");
 
         // Creazione della libreria multimediale usando il Composite Pattern
@@ -94,14 +137,14 @@ public class App {
             //Verifica dell'utente
             user = users.get(inputUsername);
             //Se esiste un utente con quello username e la password è corretta
-            // Sanitize input
             if (!inputUsername.matches("^[a-zA-Z0-9_]{3,20}$")) {
                 System.out.println("Invalid username format.");
                 continue;
             }
             if (user != null && user.checkPassword(inputPassword)) {
                 System.out.println("Login successful. Welcome, " + user.getUsername() + "!");
-                //se non viene inserita l'età, invece di mostrare un numero molto negativo (che non avrebbe senso), mostra Unknown age come msg iniziale. 
+                LOGGER.info("Login successful: " + user.getUsername());
+                //Se non viene inserita l'età, invece di mostrare un numero molto negativo (che non avrebbe senso), mostra Unknown age come msg iniziale. 
                 //Non è comunque permesso guardare contenuti VM18
                 //vedi riga 20 UserLoader.java
                 if (user.getAge()<0){
@@ -112,11 +155,13 @@ public class App {
                 loggedIn = true;
             } else {
                 loginAttempts--;
+                LOGGER.warning("Invalid credentials. Attempts remaining: " + loginAttempts);
                 System.out.println("Invalid credentials. Attempts remaining: " + loginAttempts);
             }
         }
         //Uscita dal programma a causa di troppi tentativi
         if (!loggedIn) {
+            LOGGER.severe("Too many failed login attempts. Exiting program.");
             System.out.println("Too many failed login attempts. Exiting program.");
             scanner.close();
             return;
@@ -385,7 +430,6 @@ public class App {
                         }
 
                         //Insert del campo Prohibition (presente solo nei Film o nei Games)
-
                         String prohibitionInserted = null;
                         int min = 0, max = 0, prohibitionChoice;
                         String submenuGame = "Choose the PEGI:\n1. PEGI 3\n2. PEGI 7\n3. PEGI 12\n4. PEGI 16\n5. PEGI 18\n";
@@ -471,11 +515,14 @@ public class App {
                             );
                             mediaLibrary.addMedia(newMedia);
 
+                            LOGGER.info("Media added: " + newMedia);
                             System.out.println("Media added successfully!");
                         } catch (IllegalArgumentException e) {
-                            System.out.println("Input error: " + e.getMessage());
+                            LOGGER.warning("Input error: " + e.getMessage());
+                            System.out.println("Input error");
                         } catch (Exception e) {
-                            System.out.println("Media creation error: " + e.getMessage());
+                            LOGGER.severe("Media creation error: " + e.getMessage());
+                            System.out.println("Media creation error");
                         }
                         break;
 
@@ -491,12 +538,15 @@ public class App {
                         }
 
                         if (mediaFound.isEmpty()) {
+                            LOGGER.warning("Media not found to be removed.");
                             System.out.println("Media not found.");
                         } else if (mediaFound.size() == 1) {
                             Media toRemove = mediaFound.get(0);
                             mediaLibrary.removeMedia(toRemove);
+                            LOGGER.info("Media removed: " + mediaFound);
                             System.out.println("Media removed successfully!");
                         } else {
+                            LOGGER.warning("Multiple media items found with the same title for removal.");
                             System.out.println("Multiple media items found with the same title:");
                             for (int i = 0; i < mediaFound.size(); i++) {
                                 System.out.println((i + 1) + ". " + mediaFound.get(i));
@@ -509,11 +559,14 @@ public class App {
                                 if (removeChoice > 0 && removeChoice <= mediaFound.size()) {
                                     Media daRimuovere = mediaFound.get(removeChoice - 1);
                                     mediaLibrary.removeMedia(daRimuovere);
+                                    LOGGER.info("Media removed: " + mediaFound);
                                     System.out.println("Media removed successfully!");
                                 } else {
+                                    LOGGER.warning("Invalid selection.");
                                     System.out.println("Invalid selection.");
                                 }
                             } catch (NumberFormatException e) {
+                                LOGGER.warning("Invalid input (not a number).");
                                 System.out.println("Invalid input. Please enter a number.");
                             }
                         }
@@ -542,16 +595,19 @@ public class App {
 
                                 int requiredAge = User.getRequiredAge(selectedMedia.getProhibition());
                                 if (user.getAge() < requiredAge) {
+                                    LOGGER.warning("Access denied.");
                                     System.out.printf(
                                         "Access denied: You must be at least %d years old to play this content.%n",
                                         requiredAge
                                     );
                                 } else {
+                                    LOGGER.info("Playing " + selectedMedia);
                                     mediaPlayer.play(selectedMedia, user);
                                 }
 
                             } else {
                                 // Caso in cui ho più titoli uguali
+                                LOGGER.warning("Multiple media items found with the same title");
                                 System.out.println("Multiple media items found with the same title:");
                                 for (int i = 0; i < mediaFoundToPlay.size(); i++) {
                                     System.out.println((i + 1) + ". " + mediaFoundToPlay.get(i));
@@ -566,11 +622,13 @@ public class App {
 
                                     int requiredAge = User.getRequiredAge(selectedMedia.getProhibition());
                                     if (user.getAge() < requiredAge) {
+                                        LOGGER.warning("Access denied.");
                                         System.out.printf(
                                             "Access denied: You must be at least %d years old to play this content.%n",
                                             requiredAge
                                         );
                                     } else {
+                                        LOGGER.info("Playing " + selectedMedia);
                                         mediaPlayer.play(selectedMedia, user);
                                     }
                                 } else {
@@ -594,8 +652,10 @@ public class App {
                     case 12:
                         //Export
                         if (MediaExporter.exportToCSV(mediaLibrary.getMediaItems())) {
-                            System.out.println("Export completed successfully.");
+                            LOGGER.info("Export completed.");
+                            System.out.println("Export completed successfully!");
                         } else {
+                            LOGGER.severe("Export failed.");
                             System.out.println("Export failed. Check file path or permissions.");
                         }
                         break;
@@ -603,9 +663,27 @@ public class App {
                     case 13:
                         //Uscita dal programma
                         System.out.println("Exiting program...");
+                        LOGGER.info("Exit");
                         break;
                 }
             } while (choice != 13);
+
+/*************************************FILE LOG*************************************/
+
+            try {
+                //Per leggere il file di log con le azioni più recenti in cima
+                Path original = Paths.get("C:\\Users\\Utente\\OneDrive\\Desktop\\Documenti\\Epicode-Laurea\\CORSI\\Anno 1\\Semestre 2\\Object Oriented Programming\\Computer-Engineering-and-AI-Anno1-Semestre2-OOP-Java\\Computer-Engineering-and-AI-Anno1-Semestre2-OOP-Java\\oop_exam\\Utils\\app.log");
+                Path inverted = Paths.get("C:\\Users\\Utente\\OneDrive\\Desktop\\Documenti\\Epicode-Laurea\\CORSI\\Anno 1\\Semestre 2\\Object Oriented Programming\\Computer-Engineering-and-AI-Anno1-Semestre2-OOP-Java\\Computer-Engineering-and-AI-Anno1-Semestre2-OOP-Java\\oop_exam\\Utils\\log_inverted.txt");
+
+                List<String> lines = Files.readAllLines(original);
+                Collections.reverse(lines);
+                Files.write(inverted, lines);
+                LOGGER.info("Log copied and inverted to log_inverted.txt");
+            } catch (IOException e) {
+                System.err.println("Error reversing the log file: " + e.getMessage());
+            }
+            
+/**********************************************************************************/
 
         scanner.close();
     }
