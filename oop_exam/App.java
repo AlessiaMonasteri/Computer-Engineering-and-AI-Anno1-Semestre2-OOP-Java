@@ -68,25 +68,6 @@ public class App {
         mediaLibrary.addMedia(MediaFactory.createMedia("podcast", "Radiolab", "WNYC Studios", 2002, "Science", "", "", ""));
         mediaLibrary.addMedia(MediaFactory.createMedia("podcast", "Armchair Expert", "Dax Shepard", 2018, "Interview", "", "", ""));
 
-        //Creazione di 4 liste per Film, Musica, Giochi, Podcast
-        List<Media> movieLibrary = new ArrayList<>();
-        List<Media> songLibrary = new ArrayList<>();
-        List<Media> gameLibrary = new ArrayList<>();
-        List<Media> podcastLibrary = new ArrayList<>();
-
-        //Insert nella lista pertinente in base al tipo
-        for (Media media : mediaLibrary.getMediaItems()) {
-            if (media instanceof Movie) {
-                movieLibrary.add(media);
-            } else if (media instanceof Song) {
-                songLibrary.add(media);
-            } else if (media instanceof Game) {
-                gameLibrary.add(media);
-            } else if (media instanceof Podcast){
-                podcastLibrary.add(media);
-            }
-        }
-
         //Creazione di un MediaPlayer per gestire la riproduzione
         MediaPlayer mediaPlayer = new MediaPlayer();
                 
@@ -200,29 +181,38 @@ public class App {
                     case 2:
                         //Mostra tutti i film nella libreria
                         System.out.println("Movies in the library:");
-                        for (Media movie : movieLibrary) {
-                            System.out.println(movie);
+                        for (Media media : mediaLibrary.getMediaItems()) {
+                            if (media instanceof Movie) {
+                                System.out.println(media);
+                            }
                         }
                         break;
+
                     case 3: 
                         //Mostra tutte le canzoni nella libreria
                         System.out.println("Songs in the library:");
-                        for (Media song : songLibrary) {
-                            System.out.println(song);
+                        for (Media media : mediaLibrary.getMediaItems()) {
+                            if (media instanceof Song) {
+                                System.out.println(media);
+                            }
                         }
                         break;
                     case 4: 
                         //Mostra tutte i giochi nella libreria
-                        System.out.println("Games in the library:");
-                        for (Media game : gameLibrary) {
-                            System.out.println(game);
+                        System.out.println("Songs in the library:");
+                        for (Media media : mediaLibrary.getMediaItems()) {
+                            if (media instanceof Game) {
+                                System.out.println(media);
+                            }
                         }
                         break;
                     case 5: 
                         //Mostra tutti i podcast nella libreria
-                        System.out.println("Podcasts in the library:");
-                        for (Media podcast : podcastLibrary) {
-                            System.out.println(podcast);
+                        System.out.println("Songs in the library:");
+                        for (Media media : mediaLibrary.getMediaItems()) {
+                            if (media instanceof Podcast) {
+                                System.out.println(media);
+                            }
                         }
                         break;
                     case 6:
@@ -481,15 +471,6 @@ public class App {
                             );
                             mediaLibrary.addMedia(newMedia);
 
-                            if (newMedia instanceof Movie) {
-                                movieLibrary.add((Movie) newMedia);
-                            } else if (newMedia instanceof Song) {
-                                songLibrary.add((Song) newMedia);
-                            } else if (newMedia instanceof Game) {
-                                gameLibrary.add((Game) newMedia);
-                            } else if (newMedia instanceof Podcast) {
-                                podcastLibrary.add((Podcast) newMedia);
-                            }
                             System.out.println("Media added successfully!");
                         } catch (IllegalArgumentException e) {
                             System.out.println("Input error: " + e.getMessage());
@@ -514,8 +495,6 @@ public class App {
                         } else if (mediaFound.size() == 1) {
                             Media toRemove = mediaFound.get(0);
                             mediaLibrary.removeMedia(toRemove);
-                            movieLibrary.remove(toRemove);
-                            songLibrary.remove(toRemove);
                             System.out.println("Media removed successfully!");
                         } else {
                             System.out.println("Multiple media items found with the same title:");
@@ -530,8 +509,6 @@ public class App {
                                 if (removeChoice > 0 && removeChoice <= mediaFound.size()) {
                                     Media daRimuovere = mediaFound.get(removeChoice - 1);
                                     mediaLibrary.removeMedia(daRimuovere);
-                                    movieLibrary.remove(daRimuovere);
-                                    songLibrary.remove(daRimuovere);
                                     System.out.println("Media removed successfully!");
                                 } else {
                                     System.out.println("Invalid selection.");
