@@ -5,7 +5,7 @@ Funzionalità principali:
 
 LOGIN UTENTE
 -Verifica delle credenziali criptate (libreria jbcrypt) 
--Verifica dell'età tramite i file users_hash.properties e user_ages.properties.
+-Verifica dell'età tramite i file users_hash.properties e user_ages.properties per la riproduzione di contenuti con una restrizione d'età
 
 GESTIONE DELLA LIBRERIA MULTIMEDIALE
 -Consultazione della libreria esistente
@@ -13,7 +13,7 @@ GESTIONE DELLA LIBRERIA MULTIMEDIALE
 -Aggiunta e rimozione di media
 
 RIPRODUZIONE DEI MEDIA
--Riproduzione di contenuti (con gestione dei contenuti VM18)
+-Riproduzione di contenuti
 -Comandi: play, stop, next
 
 PERSISTENZA DEI DATI
@@ -47,4 +47,3 @@ TEST SUITE (junit)
 -Verifica corretta aggiunta/rimozione/ricerca dei media
 -Test sui comandi di riproduzione
 -Test Restrizione in base all'età
--Verifica presenza di entry INFO/SEVERE in app.log

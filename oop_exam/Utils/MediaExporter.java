@@ -13,7 +13,7 @@ import Library.Song;
 public class MediaExporter {
 
     public static boolean exportToCSV(List<Media> mediaList) {
-        String filePath = "C:\\Users\\Utente\\OneDrive\\Desktop\\Documenti\\Epicode-Laurea\\CORSI\\Anno 1\\Semestre 2\\Object Oriented Programming\\Computer-Engineering-and-AI-Anno1-Semestre2-OOP-Java\\Computer-Engineering-and-AI-Anno1-Semestre2-OOP-Java\\oop_exam\\media_library.csv";
+        String filePath = "C:\\Users\\Utente\\OneDrive\\Desktop\\Documenti\\Epicode-Laurea\\CORSI\\Anno 1\\Semestre 2\\Object Oriented Programming\\Computer-Engineering-and-AI-Anno1-Semestre2-OOP-Java\\Computer-Engineering-and-AI-Anno1-Semestre2-OOP-Java\\oop_exam\\MainApp\\media_library.csv";
         //Scrive l’intestazione delle colonne nel file CSV
         try (FileWriter writer = new FileWriter(filePath)) {
             writer.write("Type,Title,Author,Year,Album,Console,Genre,Prohibition\n");

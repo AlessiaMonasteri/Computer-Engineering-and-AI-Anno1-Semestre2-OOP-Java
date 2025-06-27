@@ -1,9 +1,6 @@
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+package MainApp;
+
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -44,7 +41,7 @@ public class App {
             LOGGER.setUseParentHandlers(false);
             //Crea un FileHandler che scrive i log nel file app.log.
             //Il secondo parametro true indica che il logger non sovrascrive il file ma fa l'append
-            Handler fh = new FileHandler("C:\\Users\\Utente\\OneDrive\\Desktop\\Documenti\\Epicode-Laurea\\CORSI\\Anno 1\\Semestre 2\\Object Oriented Programming\\Computer-Engineering-and-AI-Anno1-Semestre2-OOP-Java\\Computer-Engineering-and-AI-Anno1-Semestre2-OOP-Java\\oop_exam\\Utils\\app.log", true);
+            Handler fh = new FileHandler("C:\\Users\\Utente\\OneDrive\\Desktop\\Documenti\\Epicode-Laurea\\CORSI\\Anno 1\\Semestre 2\\Object Oriented Programming\\Computer-Engineering-and-AI-Anno1-Semestre2-OOP-Java\\Computer-Engineering-and-AI-Anno1-Semestre2-OOP-Java\\oop_exam\\Utils\\Logs\\app.log", true);
             //Per scrivere i log in un formato leggibile, con data, livello, messaggio
             fh.setFormatter(new SimpleFormatter());
             //Aggiunge il FileHandler al logger, così i messaggi verranno scritti nel file specificato
@@ -64,11 +61,11 @@ public class App {
 
     public static void main(String[] args) {
 
-/*--------------------------------------------INITIAL CONTENT--------------------------------------------- */
-
         //Lancio dell'applicazione
         LOGGER.info("Start");
         System.out.println("Launching the Media app...");
+
+/*--------------------------------------------INITIAL CONTENT--------------------------------------------- */
 
         // Creazione della libreria multimediale usando il Composite Pattern
         MediaLibrary mediaLibrary = new MediaLibrary();
@@ -667,23 +664,6 @@ public class App {
                         break;
                 }
             } while (choice != 13);
-
-/*************************************FILE LOG*************************************/
-
-            try {
-                //Per leggere il file di log con le azioni più recenti in cima
-                Path original = Paths.get("C:\\Users\\Utente\\OneDrive\\Desktop\\Documenti\\Epicode-Laurea\\CORSI\\Anno 1\\Semestre 2\\Object Oriented Programming\\Computer-Engineering-and-AI-Anno1-Semestre2-OOP-Java\\Computer-Engineering-and-AI-Anno1-Semestre2-OOP-Java\\oop_exam\\Utils\\app.log");
-                Path inverted = Paths.get("C:\\Users\\Utente\\OneDrive\\Desktop\\Documenti\\Epicode-Laurea\\CORSI\\Anno 1\\Semestre 2\\Object Oriented Programming\\Computer-Engineering-and-AI-Anno1-Semestre2-OOP-Java\\Computer-Engineering-and-AI-Anno1-Semestre2-OOP-Java\\oop_exam\\Utils\\log_inverted.txt");
-
-                List<String> lines = Files.readAllLines(original);
-                Collections.reverse(lines);
-                Files.write(inverted, lines);
-                LOGGER.info("Log copied and inverted to log_inverted.txt");
-            } catch (IOException e) {
-                System.err.println("Error reversing the log file: " + e.getMessage());
-            }
-            
-/**********************************************************************************/
 
         scanner.close();
     }

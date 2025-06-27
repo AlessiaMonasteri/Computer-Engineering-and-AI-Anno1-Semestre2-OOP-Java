@@ -1,0 +1,31 @@
+Type,Title,Author,Year,Album,Console,Genre,Prohibition
+Movie,Interstellar,Christopher Nolan,2014,,,Sci-Fi,
+Movie,Pulp Fiction,Quentin Tarantino,1994,,,Crime,
+Movie,Schindler's List,Steven Spielberg,1993,,,Drama,
+Movie,Titanic,James Cameron,1997,,,Romance,
+Movie,Avatar,James Cameron,2009,,,Sci-Fi,
+Movie,Inception,Christopher Nolan,2010,,,Sci-Fi,
+Movie,The Revenant,Alejandro González Iñárritu,2015,,,Drama,
+Movie,The Lion King,Roger Allers - Rob Minkoff,1994,,,Animation,
+Movie,Hereditary,Ari Aster,2018,,,Horror,VM 18
+Movie,The Conjuring,James Wan,2013,,,Horror,VM 18
+Song,Bohemian Rhapsody,Queen,1975,A Night at the Opera,,Rock,
+Song,Hotel California,Eagles,1976,Hotel California,,Rock,
+Song,Smells Like Teen Spirit,Nirvana,1991,Nevermind,,Grunge,
+Song,Thriller,Michael Jackson,1982,Thriller,,Pop,
+Song,Stairway to Heaven,Led Zeppelin,1971,Led Zeppelin IV,,Rock,
+Song,Imagine,John Lennon,1971,Imagine,,Pop,
+Song,Like a Rolling Stone,Bob Dylan,1965,Highway 61 Revisited,,Folk,
+Song,La Noia,Angelina Mango,2024,Poké melodrama,,Pop,
+Song,Alba,Ultimo,2023,Alba,,Pop,
+Song,Amare,La Rappresentante di Lista,2021,My Mamma,,Pop,
+Game,The Legend of Zelda,Nintendo EPD,2017,,Nintendo Switch,Adventure,PEGI 16
+Game,God of War,Santa Monica Studio,2018,,PlayStation 4,Action,PEGI 18
+Game,Red Dead Redemption 2,Rockstar Games,2018,,PlayStation 4 / Xbox One / PC,Action,PEGI 18
+Game,Super Mario Odyssey,Nintendo EPD,2017,,Nintendo Switch,Platform,PEGI 7
+Game,Halo Infinite,343 Industries,2021,,Xbox Series X/S / Xbox One / PC,Fps,PEGI 16
+Podcast,The Daily,The New York Times,2017,,,News,
+Podcast,Stuff You Should Know,iHeartRadio,2008,,,Education,
+Podcast,Serial,Sarah Koenig,2014,,,True crime,
+Podcast,Radiolab,WNYC Studios,2002,,,Science,
+Podcast,Armchair Expert,Dax Shepard,2018,,,Interview,
