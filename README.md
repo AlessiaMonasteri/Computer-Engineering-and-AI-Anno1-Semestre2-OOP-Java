@@ -5,7 +5,8 @@ Funzionalità principali:
 
 LOGIN UTENTE
 -Verifica delle credenziali criptate (libreria jbcrypt) 
--Verifica dell'età tramite i file users_hash.properties e user_ages.properties per la riproduzione di contenuti con una restrizione d'età
+-Verifica dell'età tramite i files Utils\users_hash.properties e 
+Utils\user_ages.properties per la riproduzione di contenuti con una restrizione d'età
 
 GESTIONE DELLA LIBRERIA MULTIMEDIALE
 -Consultazione della libreria esistente
@@ -17,15 +18,15 @@ RIPRODUZIONE DEI MEDIA
 -Comandi: play, stop, next
 
 PERSISTENZA DEI DATI
--Salvataggio della libreria aggiornata in un file CSV
+-Salvataggio della libreria aggiornata in un file CSV (MainApp\media_library.csv)
 
 GESTIONE DEI LOG
 -Tracking centralizzato di eventi significativi dell’applicazione (login, operazioni CRUD, riproduzione)
--Output su file app.log
+-Output su Utils\Log\app.log
 
 TECNOLOGIE
 -Java SE 17
--Java I/O (per lettura/scrittura file .properties e .txt)
+-Java I/O
 -Java Collections Framework
 -CLI con Scanner e System.out
 -jBCrypt per la sicurezza delle password
@@ -34,13 +35,13 @@ TECNOLOGIE
 DESIGN PATTERNS
 -Composite Pattern: usato per trattare in modo uniforme singoli media e gruppi di media.
 -Iterator Pattern: usato per scorrere gli elementi della libreria.
--Factory Pattern: usato per creare dinamicamente diversi tipi di media.
--Sanitizzazione degli input: usato per migliorare la robustezza e la sicurezza ripulendo gli input inseriti.
+-Factory Pattern: usato per creare dinamicamente diversi tipi di media (game/movie/song/podcast).
+-Sanitizzazione degli input: usato per migliorare la robustezza e la sicurezza ripulendo gli input inseriti dai simboli.
 
 LIMITAZIONI
 -L’interfaccia è solo testuale (CLI)
 -L'autenticazione e la raccolta dovrebbero essere gestiti con un database
--Manca il supporto multilingua
+-Non è presente un supporto multilingua
 
 TEST SUITE (junit)
 -Verifica del login
