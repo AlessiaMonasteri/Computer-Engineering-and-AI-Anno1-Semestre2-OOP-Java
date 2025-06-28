@@ -16,7 +16,7 @@ public class AgeLoader {
                 String line = scanner.nextLine().trim();
 
                 if (!line.isEmpty() && line.contains("=")) {
-                    //Divide la riga in due parti: prima del = e dopo, limitando la divisione a massimo due elementi
+                    //Divide la riga in due parti: prima del = e dopo, limitando la divisione a due elementi
                     String[] parts = line.split("=", 2);
 
                     String username = parts[0].trim();

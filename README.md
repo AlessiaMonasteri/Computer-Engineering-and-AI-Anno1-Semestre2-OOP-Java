@@ -4,25 +4,22 @@ che permette agli utenti di autenticarsi, esplorare e gestire una libreria multi
 Funzionalità principali:
 
 LOGIN UTENTE
--Verifica delle credenziali criptate (libreria jbcrypt) 
--Verifica dell'età tramite i files Utils\users_hash.properties e 
-Utils\user_ages.properties per la riproduzione di contenuti con una restrizione d'età
+-Verifica delle credenziali criptate (libreria jbcrypt) con il file Utils\users_hash.properties;
+-Verifica dell'età tramite il file Utils\user_ages.properties per la riproduzione di contenuti con restrizione.
 
 GESTIONE DELLA LIBRERIA MULTIMEDIALE
--Consultazione della libreria esistente
--Ricerca per titolo, autore, anno o genere
--Aggiunta e rimozione di media
+-Consultazione della libreria esistente;
+-Ricerca per titolo, autore, anno o genere;
+-Aggiunta e rimozione di media.
 
 RIPRODUZIONE DEI MEDIA
--Riproduzione di contenuti
--Comandi: play, stop, next
+-Comandi: play, stop, next.
 
 PERSISTENZA DEI DATI
 -Salvataggio della libreria aggiornata in un file CSV (MainApp\media_library.csv)
 
 GESTIONE DEI LOG
--Tracking centralizzato di eventi significativi dell’applicazione (login, operazioni CRUD, riproduzione)
--Output su Utils\Log\app.log
+-Tracking degli eventi significativi dell’applicazione (login, operazioni CRUD, riproduzione) con output su Utils\Log\app.log.
 
 TECNOLOGIE
 -Java SE 17
@@ -39,9 +36,12 @@ DESIGN PATTERNS
 -Sanitizzazione degli input: usato per migliorare la robustezza e la sicurezza ripulendo gli input inseriti dai simboli.
 
 LIMITAZIONI
--L’interfaccia è solo testuale (CLI)
--L'autenticazione e la raccolta dovrebbero essere gestiti con un database
--Non è presente un supporto multilingua
+-L’interfaccia è testuale (CLI), ulteriori implementazioni implicherebbero l'uso di Java Swing o simili;
+-La raccolta dovrebbe essere gestita con un database;
+-Non è presente un supporto multilingua;
+-Le informazioni sull'età sono facilmente modificabili, dovrebbero essere gestite con un file codificato (es.Base64, un sistema di codifica binario–testuale) per scoraggiare la modifica del file users_ages.properties, oppure gestire le date di nascita con un db.
+-Non è presente un Gestore Utenze: al momento le users sono fisse e modificabili solo manualmente con il file users_ages e facendo uso dell'utility PasswordHasher.
+Si potrebbero implementare in una classe aggiuntiva l'aggiunta (admin only), la rimozione (admin-only) e lo switch dell'account(all users).
 
 TEST SUITE (junit)
 -Verifica del login

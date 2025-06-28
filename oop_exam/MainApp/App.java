@@ -641,7 +641,7 @@ public class App {
 
                     case 11:
                         //Riproduzione elemento succesivo
-                        //NB: si procede in avanti nella libreria principale
+                        //NB: si procede in avanti nella libreria
                         //Quindi ad esempio è possibile passare dalla riproduzione di un film a una canzone
                         mediaPlayer.next(mediaLibrary.getMediaItems());
                         break;
